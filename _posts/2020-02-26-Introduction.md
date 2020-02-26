@@ -18,7 +18,7 @@ Ich moechte in erster Linie erreichen, dass sich mehr Menschen mit Internet ause
 Ich werde hier Artikel ueber alles moegliche posten, dass irgendwas mit Internet oder Elektronischen Geraeten zu tun hat. z.B. wird es hier Artikal ueber Datenschutz, Internetnutzung, hacking theorie und schutz, Internet und services erklaerungen, linux administration und vielem mehr gehen.
 
 
-Feedback ist gern gesehen, Kontaktinformationen im about tab oben zu finden.
+Feedback ist gern gesehen, Kontaktinformationen sind im about tab oben zu finden.
 
 
 Bleibt sicher!
