@@ -46,9 +46,10 @@ Schreibt mir eine mail: mcwertgaming@gmail.com
 # Zum Weiterlesen: 
 
 [How does the Internet work? - von web.stanfort.edu ](https://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm )
+
 [Was ist das Internet – von Giga.de](https://www.giga.de/extra/internet/specials/was-ist-das-internet-einfach-nicht-langweilig-erklaert/ )
 
-
+#  
 
 Bleibt sicher! 
 ### Damon Leven 
