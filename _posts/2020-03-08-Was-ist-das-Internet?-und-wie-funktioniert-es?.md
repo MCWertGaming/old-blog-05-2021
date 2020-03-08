@@ -13,7 +13,7 @@ Wir wissen jetzt, dass das Internet eine Art zwischen Netzwerk für die eigentli
 
 # Was ist ein (Computer-) Netzwerk? 
 
-Ein Computernetzwerk ist zunächst einmal das verbinden von Computern, um zwischen ihnen Daten auszutauschen. Stellt euch vor, dass ihr mit einem Freund vor dem Fernseher sitzt und ihr wollt euch Videos auf YouTube anschauen. Damit es kein Streit gibt, verbindet ihr euch beide über Chromecast mit eurem Handy mit dem Fernseher und fängt an Videos in die Playlist hinzuzufügen. Klar, das Handy überträgt daten an den Fernseher, aber kann man dann von einem Netzwerk reden? 
+Ein Computernetzwerk ist zunächst einmal das verbinden von Computern, um zwischen ihnen Daten auszutauschen. Stellt euch vor, dass ihr mit einem Freund vor dem Fernseher sitzt und ihr wollt euch Videos auf YouTube anschauen. Damit es kein Streit gibt, verbindet ihr euch beide über Chromecast mit eurem Handy mit dem Fernseher und fängt an Videos in die Playlist hinzuzufügen. Klar, das Handy überträgt Daten an den Fernseher, aber kann man dann von einem Netzwerk reden? 
 
 Tatsächlich hat jeder zumindest ein kleines Netzwerk bei sich zu hause. Der Router (meist ein kleines Gerät, über das man ins Internet geht) verbindet alle mit ihm verbundenen Geräte zu einem lokalen Netzwerk zusammen. Lokal, weil es erstmal nur Geräte im inneren des Netzwerkes, also bei einem zu Hause, nutzen können. 
 
@@ -38,7 +38,7 @@ Doch was das genau auf sich hat werden wir in den kommenden Posts kennenlernen.
 
 # Was jetzt? 
 
-Jetzt hast du gelernt, wie das Grund Konstrukt des Internets aussieht und grundlegend aufgebaut ist. Damit bist mehr mit der Alltäglichen Materie mehr vertraut als viele andere. Wenn dir dieser Blogpost gefallen hat und du mehr dieses Thema wissen möchtest kannst du die unten genannten Artikeln dein Wissen vertiefen und/oder nächste Woche auf meinen Blog den nächsten Blog Artikel lesen. 
+Jetzt hast du gelernt, wie das Grund Konstrukt des Internets aussieht und grundlegend aufgebaut ist. Damit bist mehr mit der alltäglichen Materie mehr vertraut als viele andere. Wenn dir dieser Blogpost gefallen hat und du mehr dieses Thema wissen möchtest kannst du die unten genannten Artikeln dein Wissen vertiefen und/oder nächste Woche auf meinen Blog den nächsten Blog Artikel lesen. 
 
 Du denkst, dass ich Unsinn rede und weist es besser? Ich bin kein Einstein und auch nicht allwissend, also könnt ihr mich gerne auf Fehler hinweisen, oder mir Ergänzungen zukommen lassen. Dasselbe gilt für Fragen usw.  
 Schreibt mir eine mail: mcwertgaming@gmail.com 
