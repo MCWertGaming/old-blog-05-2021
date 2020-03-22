@@ -1,9 +1,9 @@
 title: OpenFoxBlog
-description: "Fuer alle, die Privatsphaere und Sicherheit schaetzen"
+description: "OpenFoxBlog ist ein Blog, welcher sich an alle dort draußen richtet, die mehr über die moderne und digitale Welt wissen möchten. Die Posts drehen sich meistens um das Internet, Linux, Hacking und solche Sachen. Trotzdem werden auch immer mal off-topic kommen, oder was mir sonst noch so einfällt. Alles natürlich auch immer gemixt mit ein bisschen (trockenem) Humor und abschweifendem erzählen. Überzeuge dich doch einfach selbst."
 author:
   name: "Damon Leven"
   email: "mcwertgaming@gmail.com"
-  url: "Placeholder"
+  url: "openfoxblog.blackvyperstudios.software"
 
 baseurl: /
 

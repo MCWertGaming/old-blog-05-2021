@@ -5,13 +5,20 @@ title: About
 
 # about
 
-OpenFoxBlog wird von Damon Leven betrieben und verfolgt das Ziel die Leute darueber aufzuklaeren, welche moeglichkeiten das internet fuer uns bereitstellt und wie man es optimal und sicher nutzen kann. Gleichzeitig soll es leute auf Gefahren wie z.B. hacking, zensierung und tracking vorbereiten, sodass man versteht was genau passiert und wie man sich davor schuetzt. Hin und wieder gibt es auch tiefere Einblicke in manche Geek Themen, wie zum beipiel linux und hacking tutorials. Hier wird es auch posts zu BlackVyperStudios geben, welches in Kooperation mit openfoxblog steht.
+OpenFoxBlog ist ein Blog, welcher sich an alle dort draußen richtet, die mehr über die moderne und digitale Welt wissen möchten. Die Posts drehen sich meistens um das Internet, Linux, Hacking und solche Sachen. Trotzdem werden auch immer mal off-topic kommen, oder was mir sonst noch so einfällt. Alles natürlich auch immer gemixt mit ein bisschen (trockenem) Humor und abschweifendem erzählen. [Überzeuge dich doch einfach selbst](https://openfoxblog.blackvyperstudios.software/).
 
-# hier koennt ihr mich erreichen
+# Die häufigsten Themen 
 
-mail: mcwertgaming@gmail.com
-twitter: @DGamingFox
+- Internet Sicherheit & Hacking
+- Linux administrieren & nutzen
+- Serverhosting
+- Privatsphäre im Internet
+- Netzpolitik
+- Geschichten aus meinem leben
+- Was mir sonst noch so einfällt :P
 
+# Warum sollst du meinen Blog lesen?
 
-Bleibt sicher!
-Damon Leven
+Mit diesem Blog möchte ich die Leute informieren, wie sie sich und andere schützen können, gefolgt von wie funktionieren die Dinge. Ihr sollt ein Verständnis bekommen, wie die Dinge funktionieren und was so alles geht (und was nicht). Außerdem gibt es hier einen bunten Mix an Themen, was für ein bisschen Abwechslung sorgt. 
+
+### Informationen sind Macht – unterschätze sie nicht
