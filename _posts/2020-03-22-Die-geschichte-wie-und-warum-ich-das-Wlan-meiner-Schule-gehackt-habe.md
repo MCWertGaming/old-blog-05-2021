@@ -18,15 +18,15 @@ Nach einer Verschiebung des Gesprächs fand es schlussendlich wie geplant statt.
 
 Deswegen habe ich ein bisschen gewartet, mit der Hoffnung, dass sich doch darum gekümmert wird. Leider passierte gar nichts. Weil ich mich dazu verpflichtet gefühlt habe, es selbst in die Hand zu nehmen, habe ich beschlossen das Problem zu demonstrieren. Also habe ich Wireshark auf meinen (Linux) Computer installiert. Eine Wlankarte, welche den “Monitormodus” unterstützt habe ich zum Glück vor einiger Zeit bereits besorgt. Der monitor Modus ist wichtig, weil bei diesem die Wlankarte auf alle Funkverbindung lauscht, andernfalls empfängt sie nur, was sie will/braucht. Also habe ich die Wlankarte in den Monitormodus geschaltet und den Wireshark gestartet. Diesen habe ich benutzt, um die empfangenen daten in einer Tabelle einfach darzustellen.  
 
-Kleine Info vorab – Es zu großen Problemen oder rechtlicher Verfolgung führen, fremde Netzwerke oder Datenverkehre mit zu lesen/schreiben. Also bitte nur bei euren eigenen Geräten. 
+Kleine Info vorab – Es zu großen Problemen oder rechtlicher Verfolgung führen, fremde Netzwerke oder Datenverkehre mit zu lesen/schreiben. Also bitte nur bei euren eigenen Geräten ausprobieren. 
 
-Genau deswegen habe ich dann mit meinem Handy und meinem Laptop die versuche gemacht. Ich habe mich daher mit meinem Handy auf der Login Seite angemeldet, während der Laptop mitgeschnitten hat. Angemeldet habe ich natürlich mit Test User Name und Test Passwort. Es ist ja nicht wichtig, ob es korrekt ist, mitlesen kann man es so oder so. 
+Genau deswegen habe ich dann mit meinem Handy und meinem Laptop die versuche gemacht. Ich habe mich daher mit meinem Handy auf der Login Seite angemeldet, während der Laptop mitgeschnitten hat. Angemeldet habe ich natürlich mit Test Username und Test Passwort. Es ist ja nicht wichtig, ob es korrekt ist, mitlesen kann man es so oder so. 
 
-30 Minuten probieren und feinjustieren und ich hatte Nutzer Name und Passwort in meinem Wireshark. 
+30 Minuten probieren und feinjustieren und ich hatte Nutzername und Passwort in meinem Wireshark. 
 
 ![](assets/wireshark_hack_screenshot.jpg)
 
-Oben sieht man die Empfangenen Pakete, unten den Inhalt des Pakets. Der rot eingekreiste Eintrag oben ist das Packet, welches mein Handy zu Router, also der Login Seite des Internets geschickt hat. Unten eingekreist, sieht man die URL der Login Seite (als beweis, dass das wirklich der Login beim Wlan ist). Ganz unten sind in Rot die Variablen vom User Namen und Passwort. In grüne nochmal genauer unterlegt kann man sehr klar den eingegebenen User Namen und Passwort sehen. 
+Oben sieht man die Empfangenen Pakete, unten den Inhalt des Pakets. Der rot eingekreiste Eintrag oben ist das Packet, welches mein Handy zu Router, also der Login Seite des Internets geschickt hat. Unten eingekreist, sieht man die URL der Login Seite (als beweis, dass das wirklich der Login von unserem Wlan ist). Ganz unten sind in Rot die Variablen vom Username und Passwort. In grüne nochmal genauer unterlegt kann man sehr klar die eingegebenen Werte sehen. 
 
 # Was ist das Ende der Geschichte? 
 
