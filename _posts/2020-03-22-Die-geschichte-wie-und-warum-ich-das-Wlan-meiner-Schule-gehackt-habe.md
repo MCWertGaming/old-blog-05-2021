@@ -30,36 +30,34 @@ Oben sieht man die Empfangenen Pakete, unten den Inhalt des Pakets. Der rot eing
 # Was ist das Ende der Geschichte? 
 
 Ich habe den Screenshot mit einer ausführlichen und einfachen Anleitung an meinen Schulleiter gesendet. Hier ein (zensierter) Auszug davon: 
-```
-Hallo Herr XYZ, 
- 
-Ich habe mich noch einmal mit der Sicherheitsthematik vom WLAN der XYZ-schule befasst und nach ca 20 Minuten habe ich es geschafft (meine eigene anfrage) an die Anmelde Seite abzufangen. Ist tatsächlich einfacher, als ich zuerst dachte. Ein Programm runterladen und ein paar Knöpfe drücken kombiniert mit ein wenig Geduld und sie können jegliche Anmeldung mitlesen. Ihre Kollegen der IT Firmer müssten aber schon lange von dem Problem wissen, da man mit ein wenig JavaScript vor dem Versenden Benutzer Name und Passwort in den variablen auseinander schneidet (wahrscheinlich um es schwieriger zu machen automatisierte Angriffe zu starten) aber dann trotzdem die variablen "username" und "password" heißen ist mir nicht so ganz klar. auch dass eine "login.xml" Datei mit den Account Daten verschickt wird. Da bei HTTP und offenem wlan eh schon jeder mitlesen kann, sind Standard Namen sehr schlimm, da z.B. mein Wireshark solche Sachen direkt anzeigt, wodurch einem sogar das suchen erspart wird. Problem ist leider auch, dass ich bei meinem Test natürlich auch den HTTP Traffics von anderen Leuten mitlesen kann. Auch wenn heute, dass meiste SSL verschlüsselt ist, ist es halt trotzdem nicht so toll. 
-  
-Wie ich ja schon gesagt habe, empfehle ich ihnen bzw. ihren IT-Unternehmen die Schlossschul Domain um eine Subdomain wie z.B. login.XYZ-schule.de zu erstellen (können sie bei ihrem Domain Provider einfach machen) dann entweder ein Wildcard Zertifikat auf die Seite legen (Wildcard Zertifikate sind auf der Haupt und Subdomain gültig) oder sie nutzen let's encrypt. 
- 
-Dann erstellen sie auf ihrem VMware Server eine neue Maschine mit einem Reverse Proxy (z.B. NginX oder Treafik oder Caddy) und hinterlegen in ihm entweder das Wildcard Zertifikat der XZY-schule Domain oder lassen ihn mit let's encrypt ein kostenloses Zertifikat ausstellen, welches er automatisch regelmäßig erneuert. zuletzt fehlt noch die Änderung der Login-Seite auf die Subdomain der XYZ-schule und das Beantworten der anfrage auf die Subdomain von außen z.B. mit einer Fehler Seite. 
- 
-Eigentlich sollte die IT-Firma das ohne Aufpreis machen können, Es ist kein Riesen Aufwand. (das könnte sogar ich ihnen machen und das obwohl ich mich relativ wenig mit sowas beschäftige) 
 
-Daher hoffe ich, dass sie sich um das Problem kümmern. Ich bedanke mich wie immer für ihre Kooperation und dass sie an dem Thema dranbleiben. 
- 
-Wenn sie eine Demonstration von dem Problem haben möchten, kann ich es ihnen gerne persönlich vorführen. 
- 
-Angehängt ist wie immer ein Screenshot, diesmal von Wireshark mit den entsprechenden wichtigen Sachen wie immer rot markiert (Username und Passwort grün). 
- 
-(bevor sie fragen, ja die Login Daten sind falsch, da ich einfach falsche Daten eingegeben habe und dann natürlich nicht eingeloggt wurde. Funktioniert aber bei funktionierenden Daten genauso) 
- 
- 
-Schönes Wochenende ihnen! 
-Gruß
-
-Damon Leven 
-```
+> Hallo Herr XYZ, 
+>
+>Ich habe mich noch einmal mit der Sicherheitsthematik vom WLAN der XYZ-schule befasst und nach ca 20 Minuten habe ich es geschafft (meine eigene anfrage) an die Anmelde Seite abzufangen. Ist tatsächlich einfacher, als ich zuerst dachte. Ein Programm runterladen und ein paar Knöpfe drücken kombiniert mit ein wenig Geduld und sie können jegliche Anmeldung mitlesen. Ihre Kollegen der IT Firmer müssten aber schon lange von dem Problem wissen, da man mit ein wenig JavaScript vor dem Versenden Benutzer Name und Passwort in den variablen auseinander schneidet (wahrscheinlich um es schwieriger zu machen automatisierte Angriffe zu starten) aber dann trotzdem die variablen "username" und "password" heißen ist mir nicht so ganz klar. auch dass eine "login.xml" Datei mit den Account Daten verschickt wird. Da bei HTTP und offenem wlan eh schon jeder mitlesen kann, sind Standard Namen sehr schlimm, da z.B. mein Wireshark solche Sachen direkt anzeigt, wodurch einem sogar das suchen erspart wird. Problem ist leider auch, dass ich bei meinem Test natürlich auch den HTTP Traffics von anderen Leuten mitlesen kann. Auch wenn heute, dass meiste SSL verschlüsselt ist, ist es halt trotzdem nicht so toll. 
+>  
+>Wie ich ja schon gesagt habe, empfehle ich ihnen bzw. ihren IT-Unternehmen die Schlossschul Domain um eine Subdomain wie z.B. login.XYZ-schule.de zu erstellen (können sie bei ihrem Domain Provider einfach machen) dann entweder ein Wildcard Zertifikat auf die Seite legen (Wildcard Zertifikate sind auf der Haupt und Subdomain gültig) oder sie nutzen let's encrypt. 
+> 
+>Dann erstellen sie auf ihrem VMware Server eine neue Maschine mit einem Reverse Proxy (z.B. NginX oder Treafik oder Caddy) und hinterlegen in ihm entweder das Wildcard Zertifikat der XZY-schule Domain oder lassen ihn mit let's encrypt ein kostenloses Zertifikat ausstellen, welches er automatisch regelmäßig erneuert. zuletzt fehlt noch die Änderung der Login-Seite auf die Subdomain der XYZ-schule und das Beantworten der anfrage auf die Subdomain von außen z.B. mit einer Fehler Seite. 
+>
+>Eigentlich sollte die IT-Firma das ohne Aufpreis machen können, Es ist kein Riesen Aufwand. (das könnte sogar ich ihnen machen und das obwohl ich mich relativ wenig mit sowas beschäftige) 
+>
+>Daher hoffe ich, dass sie sich um das Problem kümmern. Ich bedanke mich wie immer für ihre Kooperation und dass sie an dem Thema dranbleiben. 
+> 
+>Wenn sie eine Demonstration von dem Problem haben möchten, kann ich es ihnen gerne persönlich vorführen. 
+> 
+>Angehängt ist wie immer ein Screenshot, diesmal von Wireshark mit den entsprechenden wichtigen Sachen wie immer rot markiert (Username und Passwort grün). 
+> 
+>(bevor sie fragen, ja die Login Daten sind falsch, da ich einfach falsche Daten eingegeben habe und dann natürlich nicht eingeloggt wurde. Funktioniert aber bei funktionierenden Daten genauso) 
+> 
+> 
+>Schönes Wochenende ihnen! 
+>Gruß
+>
+>Damon Leven 
 
 Seine Antwort darauf war: 
-```
-Besten Dank für die Info, ich leite sie weiter … 
-```
+
+>Besten Dank für die Info, ich leite sie weiter … 
 
 Aber Spaß bei Seite, ein paar Wochen später (in den Ferien) hat es die IT-firma direkt gemacht. Auch recht vernünftig, da kann ich nichts mehr groß aussetzen. 
 
