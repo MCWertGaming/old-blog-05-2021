@@ -1,4 +1,5 @@
 ---
+layout: page
 title: Die geschichte wie und warum ich das Wlan meiner Schule gehackt habe
 Pagepublished: false
 ---

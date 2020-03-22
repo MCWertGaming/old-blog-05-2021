@@ -1,4 +1,5 @@
 ---
+layout: post
 title: Was ist das internet? Und wie ist es grundlegend aufgebaut?
 Pagepublished: true
 ---
