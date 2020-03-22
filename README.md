@@ -6,5 +6,3 @@ openfoxblog is a blog runned by Damon Leven to get people closer to medern techn
 The theme is opensource and can be found [here](https://github.com/pages-themes/hacker). 
 It is lisenced under the Creative Commons Zero v1.0 Universal, so im fully permitted yo use it for whatever i want.
 
-cheers!
-### Damon leven
