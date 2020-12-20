@@ -20,8 +20,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: check out code
         uses: actions/checkout@v2
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
       - name: Build site with hugo setup
         uses: peaceiris/actions-hugo@v2.4.13
+        with:
+          hugo-version: 'latest'
       - name: Build
         run: hugo --minify
       - name: Deploy
