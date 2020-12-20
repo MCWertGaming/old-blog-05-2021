@@ -52,13 +52,13 @@ paginate = 5
     contentDir = "content/english"
     title = "OpenFoxBlog"
     subtitle = "A Blog about programming and technology along with furry and lifestyle."
-    owner = ""
-    keywords = ""
+    owner = "Damon Leven"
+    keywords = ["programming", "technology", "C++", "Cpp", "Furry", "fox", "opensource", "tutorials"]
     copyright = "© 2020 Damon Leven"
     menuMore = "Show more"
     readMore = "Read more"
     readOtherPosts = "Read other posts"
-    missingContentMessage = "ERROR 404 - Page not found..."
+    missingContentMessage = "Page not found..."
     missingBackButtonLabel = "Back to home page"
 
     [languages.en.params.logo]
@@ -70,6 +70,12 @@ paginate = 5
         identifier = "about"
         name = "About"
         url = "/about"
+        weight = 1
+      [[languages.en.menu.main]]
+        identifier = "contact"
+        name = "Contact"
+        url = "/contact"
+        weight = 2
 
   [languages.de]
     languageName = "Deutsch"
@@ -77,13 +83,13 @@ paginate = 5
     contentDir = "content/deutsch"
     title = "OpenFoxBlog"
     subtitle = "Ein Blog über Programmierung und Technologie, aber auch Furry und Lifestyle."
-    owner = ""
-    keywords = ""
+    owner = "Damon Leven"
+    keywords = ["Programmierung", "Technologie", "C++", "Cpp", "Furry", "fox", "opensource", "Tutorials"]
     copyright = "© 2020 Damon Leven"
     menuMore = "Mehr anzeigen"
     readMore = "Weiter lesen"
     readOtherPosts = "Andere Posts lesen"
-    missingContentMessage = "ERROR 404 - Seite existiert nicht..."
+    missingContentMessage = "Seite existiert nicht..."
     missingBackButtonLabel = "Zurück zur Startseite"
 
     [languages.de.params.logo]
@@ -95,3 +101,9 @@ paginate = 5
         identifier = "über mich"
         name = "Über mich"
         url = "/de/über-mich"
+        weight = 1
+      [[languages.de.menu.main]]
+        identifier = "kontakt"
+        name = "Kontakt"
+        url = "/de/kontakt"
+        weight = 2
