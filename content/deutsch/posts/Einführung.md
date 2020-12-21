@@ -1,5 +1,5 @@
 +++
-title = "Einleitung"
+title = "Einführung"
 date = "2020-12-20"
 author = "Damon Leven"
 description = "In diesem Artikel wird eine Übersicht über die Entstehung dieses Blogs und seine Themengebiete gegeben."
