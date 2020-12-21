@@ -17,6 +17,7 @@ Please follow German right for legal inquiries. Please send me an e-mail.
 # RSS feeds 
 - [English articles](/index.xml)
 - [German articles](/de/index.xml)
+
 All RSS feeds are always up to date and provide the full article, not just the beginning. 
 
 # Usage of Articles or parts of this blog

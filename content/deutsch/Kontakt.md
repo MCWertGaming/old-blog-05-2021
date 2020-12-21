@@ -11,11 +11,13 @@ OpenFoxBlog wird von Damon / Stax geführt. Ihn findet man auf folgenden Social 
 - [dev.to](https://coming.soon)
 - [Mastodon](https://coming.soon)
 - [E-Mail](mailto:mcwertgaming@gmailcom?subject=OpenFoxBlog)
+
 Für rechtliche Angelegenheiten gilt deutsches Recht, hierbei bitte eine E-Mail schreiben.
 
 # RSS Feeds
 - [Nur Deutsche Artikel](/de/index.xml)
 - [Nur englische Artikel](/index.xml)
+
 Die RSS Feeds sind immer aktuell und beinhalten die vollen Artikel, statt nur den Anfang. 
 
 # Verwendung von teilen dieses Blogs 
