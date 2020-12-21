@@ -19,6 +19,9 @@ To always be on track with my blog there are many ways to accomplish that:
 - [Twitter](https://twitter.com/staxthefox)
 - Or just add my blog to your bookmarks or your home-screen
 
+# Software used on this site
+- [Hugo-theme-terminal](https://github.com/panr/hugo-theme-terminal)
+
 I hope that my blog can help you to understand modern technology and programming a bit better and to make your developer-life at least a bit more uncomplicated. Thank you for reading!
 
 #### Happy coding!
