@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://mcwertgaming.github.io/"
 languageCode = "en-us"
 copyright = "This blog is published under the terms of the MIT License. Don't distribute or publish this blogs posts without permission!"
 rssLimit = 20
