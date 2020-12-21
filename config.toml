@@ -30,7 +30,7 @@ enableRobotsTXT = true
   themeColor = "orange"
 
   # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 2
+  showMenuItems = 3
 
   # show selector to switch language
   showLanguageSelector = true
@@ -86,15 +86,20 @@ enableRobotsTXT = true
 
     [languages.en.menu]
       [[languages.en.menu.main]]
+        identifier = "rss"
+        name = "RSS"
+        url = "/contact/#rss-feeds"
+        weight = 1
+      [[languages.en.menu.main]]
         identifier = "about"
         name = "About"
         url = "/about"
-        weight = 1
+        weight = 2
       [[languages.en.menu.main]]
         identifier = "contact"
         name = "Contact"
         url = "/contact"
-        weight = 2
+        weight = 3
 
   [languages.de]
     languageName = "Deutsch"
@@ -117,12 +122,17 @@ enableRobotsTXT = true
 
     [languages.de.menu]
       [[languages.de.menu.main]]
+        identifier = "rss"
+        name = "RSS"
+        url = "/de/kontakt/#rss-feeds"
+        weight = 1
+      [[languages.de.menu.main]]
         identifier = "über mich"
         name = "Über mich"
         url = "/de/über-mich"
-        weight = 1
+        weight = 2
       [[languages.de.menu.main]]
         identifier = "kontakt"
         name = "Kontakt"
         url = "/de/kontakt"
-        weight = 2
+        weight = 3
