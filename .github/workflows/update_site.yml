@@ -27,8 +27,10 @@ jobs:
         uses: peaceiris/actions-hugo@v2.4.13
         with:
           hugo-version: 'latest'
+      - name: Clean public directory
+        run: rm -rf
       - name: Build
-        run: hugo --minify
+        run: hugo
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
