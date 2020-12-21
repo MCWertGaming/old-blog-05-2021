@@ -15,9 +15,8 @@ OpenFoxBlog is run by Damon / Stax. You can find him on the following social med
 Please follow German right for legal inquiries. Please send me an e-mail. 
 
 # RSS feeds 
-- [All articles](https:://coming.soon) 
-- [Only English articles](https:://coming.soon)
-- [Only German articles](https:://coming.soon)
+- [English articles](/index.xml)
+- [German articles](/de/index.xml)
 All RSS feeds are always up to date and provide the full article, not just the beginning. 
 
 # Usage of Articles or parts of this blog

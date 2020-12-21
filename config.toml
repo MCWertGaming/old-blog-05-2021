@@ -1,9 +1,27 @@
 baseurl = "/"
 languageCode = "en-us"
+copyright = "This blog is published under the terms of the MIT License. Don't distribute or publish this blogs posts without permission!"
+rssLimit = 20
 theme = "terminal"
 paginate = 5
+enableRobotsTXT = true
+
+[author]
+  name = "Damon Leven"
+  email = "mcwertgaming@gmail.com"
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[permalinks]
+  posts = "/:year/:title/"
 
 [params]
+  AuthorName = "Damon Leven"
+  GitHubUser = "mcwertgaming"
+
   # dir name of your main content (default is `content/posts`).
   # the list of set content will show up on your index page (baseurl).
   contentTypeName = "posts"

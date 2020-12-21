@@ -5,3 +5,10 @@
 <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#e88c00">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#3f3f3f">
+
+{{ range .AlternativeOutputFormats -}}
+    {{ printf `<link rel="%s" type="%s" href="/index.xml" title="%s english" />` .Rel .MediaType.Type $.Site.Title | safeHTML }}
+{{ end -}}
+{{ range .AlternativeOutputFormats -}}
+    {{ printf `<link rel="%s" type="%s" href="/de/index.xml" title="%s deutsch" />` .Rel .MediaType.Type $.Site.Title | safeHTML }}
+{{ end -}}
