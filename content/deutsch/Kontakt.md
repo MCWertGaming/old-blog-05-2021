@@ -8,7 +8,7 @@ description = "Eine kurze Übersicht, auf welchen Sozial Media Kanälen man den 
 OpenFoxBlog wird von Damon / Stax geführt. Ihn findet man auf folgenden Social Media Kanälen: 
 - [Twitter](https://twitter.com/staxthefox)
 - [GitHub](https://github.com/mcwertgaming)
-- [dev.to](https://coming.soon)
+- [dev.to](https://dev.to/mcwertgaming)
 - [Mastodon](https://coming.soon)
 - [E-Mail](mailto:mcwertgaming@gmailcom?subject=OpenFoxBlog)
 

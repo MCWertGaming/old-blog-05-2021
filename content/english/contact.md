@@ -8,7 +8,7 @@ description = "A quick overview about the authors social media and how one could
 OpenFoxBlog is run by Damon / Stax. You can find him on the following social media accounts: 
 - [Twitter](https://twitter.com/staxthefox)
 - [GitHub](https://github.com/mcwertgaming)
-- [dev.to](https://coming.soon)
+- [dev.to](https://dev.to/mcwertgaming)
 - [Mastodon](https://coming.soon)
 - [E-Mail](mailto:mcwertgaming@gmailcom?subject=OpenFoxBlog)
 
