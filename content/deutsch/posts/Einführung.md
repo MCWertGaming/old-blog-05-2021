@@ -24,4 +24,4 @@ Ich hoffe, dass ich hiermit einen guten Überblick über diesen Blog und meine P
 
 #### Frohes Programmieren!
 
-Quellen von hier benutzter software und assets koennen [hier](/de/about/#software-used-on-this-site) gefunden werden.
+Quellen von hier benutzter software und assets koennen [hier](/de/über-mich/#in-dieser-seite-verwendete-software) gefunden werden.

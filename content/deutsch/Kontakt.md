@@ -26,4 +26,4 @@ Vervielfältigen und veröffentlichen der hier veröffentlichten Artikel ohne da
 
 #### Frohes Programmieren!
 
-Quellen von hier benutzter software und assets koennen [hier](/de/about/#software-used-on-this-site) gefunden werden.
+Quellen von hier benutzter software und assets koennen [hier](/de/über-mich/#in-dieser-seite-verwendete-software) gefunden werden.

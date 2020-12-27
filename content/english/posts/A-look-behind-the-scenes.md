@@ -7,11 +7,11 @@ description = "This post gives a quick overview about the technical behind the s
 
 In this post, I will give some insight on the technical behind the scenes of OpenFoxBlog. This will include how it is technically accomplished and what problems I encountered on my way. later on, I will explain why I have chosen the way I have in matter of the tools and services.
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2Fde%2F2020%2FA-look-behind-the-scenes)
-[English version](/2020/Ein-Blick-hinter-die-Kullissen)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2F2020%2Fa-look-behind-the-scenes%2F)
+[English version](/de/2020/ein-blick-hinter-die-kulissen/)
 
 # How was this blog setup?
-I already talked [in an earlier post](/2020/introduction/), that I'm using Hugo as static website generator. But what does that mean? And why am I not just writing HTML files directly or am using something like medium or WordPress?
+I already talked [in an earlier post](/2020/introduction/#how-did-this-blog-come-about), that I'm using Hugo as static website generator. But what does that mean? And why am I not just writing HTML files directly or am using something like medium or WordPress?
 
 # Why not just medium or Wordpress?
 First of all, I have a big problem with WordPress. Written in old PHP and lacking on proper security with a lot of problems and downsides. At the same time, I would have to buy or host a webserver to serve my site which would cost me money (even though, there are some free ones available I think). Because WordPress Isn't an option I would go with, there is only medium left. I haven't tried medium myself, but I read multiple times now, that people are criticizing on how medium tries to monetize their blog and posts. I really dislike that, because I want everyone to be able to read my blog without paying for it or having to look at dumb ads. Not to forget the tracking on free sites. In the end I chose to create my blog with Hugo and host it for free on GitHub. I want to get my thought onto the screen, not money into my pocket.
@@ -30,7 +30,7 @@ The rendered version:
 > 
 > [A link](/)
 > 
-> ![A picture](/img/free-images/panorama.svg)
+> ![A picture](/img/free-images/panorama.svg =10x10)
 >
 > **Bold**
 >

@@ -7,17 +7,16 @@ description = "Dieser Post gibt eine kleine Übersicht, wie der OpenFoxBlog aufg
 
 In diesem Post erkläre ich, wie der OpenFoxBlog hinter den Kulissen aus einer Technischen Sicht funktioniert. Hierbei werde ich auf die Technische Lösung und die aufgetauchten Probleme dieses Blogs eingehen. 
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2Fde%2F2020%2FEin-Blick-hinter-die-Kullissen%2F)
-[English version](/2020/A-look-behind-the-scenes)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2Fde%2F2020%2Fein-blick-hinter-die-kulissen%2F)
+[English version](/2020/a-look-behind-the-scenes/)
 
 # Wie wurde dieser Blog erstellt?
-Wie ich bereits [in meinem vorherigen Post](/de/2020/einführung/) beschrieben habe, benutze ich für diesen Blog Hugo als statischen Website Generator. Aber was bedeutet das eigentlich? Und warum schreibe ich nicht einfach richtige HTML Seiten oder nehme medium oder WordPress? 
+Wie ich bereits [in meinem vorherigen Post](/de/2020/einführung/#wie-kam-es-zu-diesem-blog) beschrieben habe, benutze ich für diesen Blog Hugo als statischen Website Generator. Aber was bedeutet das eigentlich? Und warum schreibe ich nicht einfach richtige HTML Seiten oder nehme medium oder WordPress? 
 
 # Warum nicht einfach medium oder WordPress?
 Zunächst muss ich sagen, dass ich eine generelle Abneigung gegenüber WordPress habe. Geschrieben in altem PHP und durchlöchert mit vielen Problemen und Sicherheitsrisiken. Dazu kommt leider auch noch, dass ein Web Server Geld kostet und ich würde die Webseite ungern von zu Hause hosten, weil Web Server immer die ersten Ziele von automatischen Angriffen im Internet sind. Da WordPress damit aus meiner Entscheidung ausfällt, bleibt noch medium. Medium ist quasi eine Webseite, auf der man seine Blog Artikel einfach veröffentlichen kann. Da es hier nicht um ein generelles Thema geht, ist das tatsächlich sogar eine denkbare Alternative für mich. Allerdings habe ich mittlerweile viel Kritik an medium und daran, dass sie wohl aktiv versuchen die Artikel ihrer User aktiv zu monetarisieren. Ich möchte kein Geld mit meinen Artikeln machen und möchte auch, dass sie jeder kostenlos und ohne Werbung oder ähnlichen lesen kann. Ich möchte meine Gedanken auf den Bildschirm bringen und nicht Geld in meinen Geldbeutel. 
 
 # Was ist ein Statischer Website Generator?
-
 Bevor ich die Frage beantworte, möchte ich kurz erklären wie der Blog überhaupt bei euch auf dem Bildschirm landet. Dieser Blog liegt bei GitHub [in einem öffentlichen git repository](https://github.com/MCWertGaming/mcwertgaming.github.io) und wird bei jedem commit automatisch neu generiert. Diese Generierung macht der Statische Website Generator. Dieser bekommt ein selbst erstelltes, oder eines der vielen frei verfügbaren Themes und die Seiten, entweder direkt als HTML5 Seite, oder z.B. als markdown. Bei generieren der Webseite geht der Generator dann durch jede Seite und kopiert den Inhalt in das Theme. Das hat den Vorteil, dass man einmal das Layout der Seite erstellt und dann dieses auf alle Posts übertragen kann. Das erspart viel Arbeit, vor allem wenn man einige Zeit später etwas an der Seite ändern möchte. Gleichzeitig kann man auch RSS Feeds und Übersichten von Artikeln generieren lassen. Klar, dafuer speziell gibt es überall Funktionen, auch WordPress und ähnliche Tools können das.
 Aber mein Lieblings Feature ist, dass ich die Artikel einfach in markdown schreiben kann. Markdown ist ein einfaches und mittlerweile auch weit verbreitetes Textformatierungssystem. Auch wenn man alle Formatierung Optionen von markdown auch direkt in HTML machen kann, ist die Syntax viel einfacher. Hier ein kleines Beispiel:
 
@@ -33,7 +32,7 @@ So sieht es gerendert aus:
 > 
 > [Ein Link](/)
 > 
-> ![Ein Bild](/img/free-images/panorama.svg)
+> ![Ein Bild](/img/free-images/panorama.svg =10x10)
 > 
 > **Fett**
 >
@@ -95,4 +94,4 @@ Das war es für den heutigen Artikel, ich hoffe, dass ich einen kleinen Einblick
 
 #### Frohes Programmieren!
 
-Quellen von hier benutzter software und assets koennen [hier](/de/about/#software-used-on-this-site) gefunden werden.
+Quellen von hier benutzter software und assets koennen [hier](/de/über-mich/#in-dieser-seite-verwendete-software) gefunden werden.
