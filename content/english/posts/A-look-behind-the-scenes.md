@@ -30,7 +30,7 @@ The rendered version:
 > 
 > [A link](/)
 > 
-> ![A picture](/img/free-images/panorama.svg=10x)
+> ![A picture](/img/free-images/panorama.svg)
 >
 > **Bold**
 >
