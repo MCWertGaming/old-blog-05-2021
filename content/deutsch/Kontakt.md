@@ -25,3 +25,5 @@ Die RSS Feeds sind immer aktuell und beinhalten die vollen Artikel, statt nur de
 Vervielfältigen und veröffentlichen der hier veröffentlichten Artikel ohne das Einverständnis des Autors ist nicht erlaubt! Jeglicher code in den Artikeln ist unter den Bedingungen der [MIT](https://opensource.org/licenses/MIT) Lizenz zu behandeln. Verweisen auf einen ganzen, oder Teile eines hier veröffentlichten Artikels ist mit Quellen zum originalen Artikel zu versehen.
 
 #### Frohes Programmieren!
+
+Quellen von hier benutzter software und assets koennen [hier](/de/about/#software-used-on-this-site) gefunden werden.

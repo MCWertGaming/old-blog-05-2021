@@ -23,3 +23,5 @@ Dieser Blog wird alle möglichen Themen behandeln. Grundlegend wird der Fokus ab
 Ich hoffe, dass ich hiermit einen guten Überblick über diesen Blog und meine Pläne für ihn erläutern konnte.
 
 #### Frohes Programmieren!
+
+Quellen von hier benutzter software und assets koennen [hier](/de/about/#software-used-on-this-site) gefunden werden.

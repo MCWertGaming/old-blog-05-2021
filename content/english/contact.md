@@ -24,3 +24,5 @@ All RSS feeds are always up to date and provide the full article, not just the b
 Distributing and publishing Articles from this blog is not allowed without the Authors agreement! All code located inside the Articles are licensed under the terms of the [MIT](https://opensource.org/licenses/MIT) license. Quoting or referencing on whole or part of Articles from this blog must be referenced with providing the source.
 
 #### Happy coding!
+
+Sources of used software and assets on this site can be found [here](/about/#software-used-on-this-site).

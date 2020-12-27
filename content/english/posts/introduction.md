@@ -22,3 +22,5 @@ This blog will cover all kinds of topics. But basically, the focus will be on pr
 I hope this has given you a good overview of this blog and my plans for it. With that until the next article and stay healthy!
 
 #### Happy coding!
+
+Sources of used software and assets on this site can be found [here](/about/#software-used-on-this-site).

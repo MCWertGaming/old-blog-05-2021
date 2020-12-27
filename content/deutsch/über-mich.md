@@ -19,8 +19,10 @@ Um mit diesem Blog auf dem Laufenden zu bleiben gibt es einige Möglichkeiten:
 - [Twitter](https://twitter.com/staxthefox)
 - Oder füge meinen Blog einfach zu deinen Lesezeichen bzw. deinem Home-screen hinzu
 
-# In dieser Seite verwendete Software 
+# In dieser Seite verwendete Software
 - [Hugo-theme-terminal](https://github.com/panr/hugo-theme-terminal)
+- [/img/free-images/panorama.svg](https://www.flaticon.com/authors/freepik)
+- [Page view counter](https://hitcounter.pythonanywhere.com/)
 
 Ich hoffe, dass ich euch mit diesem Blog moderne Technologie und Programmierung näherbringen kann und euer Developer-Leben etwas vereinfache. Danke für das Lesen!
 
