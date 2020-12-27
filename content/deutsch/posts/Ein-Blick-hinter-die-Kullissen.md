@@ -32,7 +32,7 @@ So sieht es gerendert aus:
 > 
 > [Ein Link](/)
 > 
-> ![Ein Bild](/img/free-images/panorama.svg =10x10)
+> ![Ein Bild](/img/free-images/panorama.svg)
 > 
 > **Fett**
 >
