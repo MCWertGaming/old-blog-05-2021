@@ -6,11 +6,14 @@ description = "A quick overview about the authors social media and how one could
 +++ 
 
 OpenFoxBlog is run by Damon / Stax. You can find him on the following social media accounts: 
-- [Twitter](https://twitter.com/staxthefox)
-- [GitHub](https://github.com/mcwertgaming)
-- [dev.to](https://dev.to/mcwertgaming)
-- [Mastodon](https://coming.soon)
-- [E-Mail](mailto:mcwertgaming@gmailcom?subject=OpenFoxBlog)
+
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/staxthefox)
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mcwertgaming)
+
+[![dev.to](https://img.shields.io/badge/dev.to-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white)](https://dev.to/mcwertgaming)
+
+[![Protonmail](https://img.shields.io/badge/ProtonMail-8B89CC?style=for-the-badge&logo=protonmail&logoColor=white)](mailto:dleven@protonmail.com?subject=OpenFoxBlog)
 
 Please follow German right for legal inquiries. Please send me an e-mail. 
 

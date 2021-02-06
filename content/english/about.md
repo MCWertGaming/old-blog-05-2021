@@ -11,12 +11,17 @@ Welcome to my blog! It will cover a wide range of different topics around progra
 I’m Damon, some might know me as Stax. I’m a beginning C++ programmer and a big Linux and opensource enthusiast. On this blog, I want to document and share my experiences and knowledge in all kinds of topics I’m interested in. Most posts will be bilingual in both German and English. The information will always be the same, so just read in the language you prefer! 
 
 # Articles at dev.to
-Most of the English Articles can also be found and read on dev.to [(here)](https://dev.to/mcwertgaming). I’m publishing those articles there as well, because it’s really the best way to share my posts with more people. Dev.to is at the same time a really awesome community centric project I want to contribute to.  
+Most of the English Articles can also be found and read [on dev.to](https://dev.to/mcwertgaming). I’m publishing most articles there as well, because it’s a good way to share my posts with more people. Dev.to is at the same time a really awesome community centric project I want to contribute to.
 
 # Don’t miss new articles
-To always be on track with my blog there are many ways to accomplish that: 
-- [RSS feeds](/contact/#rss-feeds)
-- [Twitter](https://twitter.com/staxthefox)
+To always be on track with my blog there are many ways to accomplish that:
+
+[![RSS](https://img.shields.io/badge/RSS-FFA500?style=for-the-badge&logo=rss&logoColor=white)](/contact/#rss-feeds)
+
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/staxthefox)
+
+[![dev.to](https://img.shields.io/badge/dev.to-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white)](https://dev.to/mcwertgaming)
+
 - Or just add my blog to your bookmarks or your home-screen
 
 # Software used on this site
