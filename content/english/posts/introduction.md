@@ -7,7 +7,6 @@ description = "This article will give an overview of how this blog came to be an
 
 To start this blog, this article will be about my intensions for it. I will explain the origin and the purpose of this blog and give a couple of small insights behind the scenes. Also, the topics and target groups of this blog will be discussed.
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2F2020%2Fintroduction%2F)
 [German version](/de/2020/einführung)
 
 # How did this blog come about?

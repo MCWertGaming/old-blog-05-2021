@@ -7,7 +7,6 @@ description = "Dieser Post gibt eine kleine Übersicht, wie der OpenFoxBlog aufg
 
 In diesem Post erkläre ich, wie der OpenFoxBlog hinter den Kulissen aus einer Technischen Sicht funktioniert. Hierbei werde ich auf die Technische Lösung und die aufgetauchten Probleme dieses Blogs eingehen. 
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2Fde%2F2020%2Fein-blick-hinter-die-kulissen%2F)
 [English version](/2020/a-look-behind-the-scenes/)
 
 # Wie wurde dieser Blog erstellt?

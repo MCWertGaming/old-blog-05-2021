@@ -6,9 +6,7 @@ description = "In diesem Artikel wird eine Übersicht über die Entstehung diese
 +++
 
 Um diesen Blog zu starten, wird es in diesem Artikel um meine Intensionen für diesen Blog gehen. Ich werde die Entstehung und den Sinn dieses Blogs erläutern und ein Paar kleine Einblicke hinter die Kulissen geben. Auch um die Themen und Zielgruppen dieses Blogs soll es hier gehen.
-
-
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2Fde%2F2020%2Feinf%25C3%25BChrung%2F) 
+ 
 [English version](/2020/introduction)
 
 # Wie kam es zu diesem Blog?

@@ -7,7 +7,6 @@ description = "This post gives a quick overview about the technical behind the s
 
 In this post, I will give some insight on the technical behind the scenes of OpenFoxBlog. This will include how it is technically accomplished and what problems I encountered on my way. later on, I will explain why I have chosen the way I have in matter of the tools and services.
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fmcwertgaming.github.io%2F2020%2Fa-look-behind-the-scenes%2F)
 [English version](/de/2020/ein-blick-hinter-die-kulissen/)
 
 # How was this blog setup?
