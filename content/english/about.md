@@ -27,7 +27,6 @@ To always be on track with my blog there are many ways to accomplish that:
 # Software used on this site
 - [Hugo-theme-terminal](https://github.com/panr/hugo-theme-terminal)
 - [/img/free-images/panorama.svg](https://www.flaticon.com/authors/freepik)
-- [Page view counter](https://hitcounter.pythonanywhere.com/)
 
 I hope that my blog can help you to understand modern technology and programming a bit better and to make your developer-life at least a bit more uncomplicated. Thank you for reading!
 
