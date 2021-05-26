@@ -7,7 +7,7 @@ description = "This post gives a quick overview about the technical behind the s
 
 In this post, I will give some insight on the technical behind the scenes of OpenFoxBlog. This will include how it is technically accomplished and what problems I encountered on my way. later on, I will explain why I have chosen the way I have in matter of the tools and services.
 
-[English version](/de/2020/ein-blick-hinter-die-kulissen/)
+[German version](/de/2020/ein-blick-hinter-die-kulissen/)
 
 # How was this blog setup?
 I already talked [in an earlier post](/2020/introduction/#how-did-this-blog-come-about), that I'm using Hugo as static website generator. But what does that mean? And why am I not just writing HTML files directly or am using something like medium or WordPress?
