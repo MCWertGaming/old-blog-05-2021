@@ -5,7 +5,7 @@ author = "Damon Leven"
 description = "This post describes the process of installing and testing a local step-ca installation using docker on CentOS 7"
 +++
 
-In this small blog post, I'll explain how I'm running my personal Certification Authority (CA) at home for securing my local we traffic with automated encryption.
+In this small blog post, I'll explain how I'm running my personal Certification Authority (CA) at home for securing my local web traffic with automated encryption.
 
 [German version](https://xx) (soon)
 
