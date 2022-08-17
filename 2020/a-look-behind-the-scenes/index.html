@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>A look behind the scenes :: OpenFoxBlog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="This post gives a quick overview about the technical behind the scenes of OpenFoxBlog, as well as why I have chosen the tools I&#39;m using." />
+<meta name="keywords" content="[programming technology C&#43;&#43; Cpp fox opensource tutorials]" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/" />
+
+
+
+
+<link rel="stylesheet" href="https://mcwertgaming.github.io/assets/style.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="https://mcwertgaming.github.io/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="https://mcwertgaming.github.io/img/favicon/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:creator" content="Damon Leven" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="A look behind the scenes">
+<meta property="og:description" content="This post gives a quick overview about the technical behind the scenes of OpenFoxBlog, as well as why I have chosen the tools I&#39;m using." />
+<meta property="og:url" content="https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/" />
+<meta property="og:site_name" content="OpenFoxBlog" />
+
+  
+    <meta property="og:image" content="https://mcwertgaming.github.io/img/favicon/favicon.ico">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+  <meta property="article:published_time" content="2020-12-27 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#e88c00">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#3f3f3f">
+
+
+
+</head>
+<body class="orange">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    OpenFoxBlog
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/contact/#rss-feeds">RSS</a></li>
+        
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/contact">Contact</a></li>
+        
+      
+      
+    
+
+    
+    <div class="spacer"></div>
+    <ul class="language-selector">
+      <ul class="language-selector-current">
+          <li>English ▾</li>
+      </ul>
+      <ul class="language-selector__more hidden">
+        
+        <li><a href="https://mcwertgaming.github.io/">English</a></li>
+        
+        <li><a href="https://mcwertgaming.github.io/de/">Deutsch</a></li>
+        
+      </ul>
+    </ul>
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/contact/#rss-feeds">RSS</a></li>
+      
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/contact">Contact</a></li>
+      
+    
+    
+    <hr />
+      
+        <li>
+          <a href="https://mcwertgaming.github.io/">English</a>
+        </li>
+      
+        <li>
+          <a href="https://mcwertgaming.github.io/de/">Deutsch</a>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/">A look behind the scenes</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2020-12-27 [Updated: 2020-12-27]
+      </span>
+    
+    
+    <span class="post-author">:: Damon Leven</span>
+    
+  </div>
+
+  
+
+  
+
+  
+
+  <div class="post-content"><div>
+        <p>In this post, I will give some insight on the technical behind the scenes of OpenFoxBlog. This will include how it is technically accomplished and what problems I encountered on my way. later on, I will explain why I have chosen the way I have in matter of the tools and services.</p>
+<p><a href="/de/2020/ein-blick-hinter-die-kulissen/">German version</a></p>
+<h1 id="how-was-this-blog-setup">How was this blog setup?<a href="#how-was-this-blog-setup" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>I already talked <a href="/2020/introduction/#how-did-this-blog-come-about">in an earlier post</a>, that I&rsquo;m using Hugo as static website generator. But what does that mean? And why am I not just writing HTML files directly or am using something like medium or WordPress?</p>
+<h1 id="why-not-just-medium-or-wordpress">Why not just medium or Wordpress?<a href="#why-not-just-medium-or-wordpress" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>First of all, I have a big problem with WordPress. Written in old PHP and lacking on proper security with a lot of problems and downsides. At the same time, I would have to buy or host a webserver to serve my site which would cost me money (even though, there are some free ones available I think). Because WordPress Isn&rsquo;t an option I would go with, there is only medium left. I haven&rsquo;t tried medium myself, but I read multiple times now, that people are criticizing on how medium tries to monetize their blog and posts. I really dislike that, because I want everyone to be able to read my blog without paying for it or having to look at dumb ads. Not to forget the tracking on free sites. In the end I chose to create my blog with Hugo and host it for free on GitHub. I want to get my thought onto the screen, not money into my pocket.</p>
+<h1 id="what-is-a-static-website-generator">What is a static website generator?<a href="#what-is-a-static-website-generator" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>before I get into the question, I quickly want to give a little insight into how my blog comes onto your screen. This blog is located on GitHub inside a <a href="https://github.com/MCWertGaming/mcwertgaming.github.io">public repository</a> and gets automatically generated on every commit. This generation is done by the static website generator. You simply provide a theme to the generator as well as your posts in form of html or markdown pages and it will put the contents of your posts into the theme. The cool thing about this method is that the theme and in the end the design of every page will be exactly the same and you don&rsquo;t have to manually create templates to edit for your posts. At the same time, you can just roll out a new theme or edit it without the need of updating every page manually. The generator can even generate RSS feeds and homepages with your latest posts on it after a before defines template (even though, WordPress and similar software can do that as well).
+But my personal favorite is the ability to just write you blog-posts in pure markdown. Markdown is a well-known and wide spread text formatting system and it provides the same options for formatting as html but with more user-friendly syntax. To visualize this quickly, here is an example:</p>
+<p>The rendered version:</p>
+<blockquote>
+<h1 id="a-test">A test<a href="#a-test" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>This is a small test for the differences of markdown / html.</p>
+<ul>
+<li>first part of a list</li>
+<li>second part of a list</li>
+</ul>
+<h2 id="smaller-heading">smaller Heading<a href="#smaller-heading" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p><a href="/">A link</a></p>
+<p><img src="/img/free-images/panorama.svg" alt="A picture"></p>
+<p><strong>Bold</strong></p>
+<p><em>Emphasized</em></p>
+<p><del>Strikethrough</del></p>
+</blockquote>
+<p>The markdown code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># A test
+</span></span><span style="display:flex;"><span>This is a small test for the differences of markdown / html.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> first part of a list
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> second part of a list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## smaller Heading
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>[<span style="color:#f92672">A link</span>](<span style="color:#a6e22e">/</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>![<span style="color:#f92672">A picture</span>](<span style="color:#a6e22e">/img/free-images/panorama.svg</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">**Bold**</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-style:italic">*Emphasized*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">~~Strikethrough~~</span>
+</span></span></code></pre></div><p>The same in html:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a-test&#34;</span>&gt;A test&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;This is a small test for the differences of markdown / html.&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">li</span>&gt;first part of a list&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">li</span>&gt;second part of a list&lt;<span style="color:#f92672">h2</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;smaller-heading&#34;</span>&gt;smaller Heading&lt;/<span style="color:#f92672">h2</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span>&gt;A link&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/img/free-images/panorama.svg&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A picture&#34;</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">strong</span>&gt;Bold&lt;/<span style="color:#f92672">strong</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">em</span>&gt;Emphasized&lt;/<span style="color:#f92672">em</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">del</span>&gt;Strikethrough&lt;/<span style="color:#f92672">del</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span></code></pre></div><p>We can clearly see, that markdown&rsquo;s syntax is a lot easier to write as well as a lot cleaner than the same in actual html. At the other hand, I really don&rsquo;t like web development and would like to avoid that at least a bit so I&rsquo;m even more happy about this feature.</p>
+<h1 id="but-why-hugo">But why Hugo?<a href="#but-why-hugo" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>I have already noted in my last post that I have used Jekyll on the old version of this blog but I experienced some problems and difficulties that would have cost me a lot of time. The first version of this blog was German only but I wanted to make this blog multilingual. As Jekyll don&rsquo;t supports using two languages well and at the same time, I didn&rsquo;t find a good theme with two languages already build in, I tried Hugo. Sure, Hugo does not offer a plugin system, but at least it has features for adding a second language built in. It also handles themes a lot better than Jekyll making it extremely easy to add themes and even update them without the need of migrating the whole site. One last thing, that made me switch, was that I found the theme I&rsquo;m currently using immediately. I like It a lot more than all other themes, even on Jekyll I found.</p>
+<h1 id="problems-with-hugo">Problems with Hugo<a href="#problems-with-hugo" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Like at probably most things at programming Hugo created some problems. The first thing I encountered with was the way Hugo creates web files. Instead of creating normal html files with the site name it creates folders with the site name and places an index.html inside that. At first this is a bit weird (at least it was for me!) but makes sense in the end. Because of that the browser hides the URL has no .html extension and makes the URL look a bit cleaner.
+All other things went without problems at all. I could just create all required sites with their content and Hugo did everything other for me.
+At the end there was actually one a bit bigger problem. The default RSS feed configuration didn&rsquo;t suite my needs. It just includes the first paragraph inside the feed instead of just providing the full post. After changing that, the markdown converter of Hugo included illegal character inside of the xml file and made it corrupt. I will make a dedicated post on how I fixed that real soon. stay tuned!</p>
+<p>Thats for today&rsquo;s post. I hope you enjoyed this little behind the scenes and with you some happy last Christmas days as well as a great new year!</p>
+<h4 id="happy-coding">Happy coding!<a href="#happy-coding" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Sources of used software and assets on this site can be found <a href="/about/#software-used-on-this-site">here</a>.</p>
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        <span class="button previous">
+            <a href="https://mcwertgaming.github.io/2021/setting-up-step-ca-with-docker-on-centos/">
+                <span class="button__icon">←</span>
+                <span class="button__text">Setting up step-ca with docker on CentOS</span>
+            </a>
+        </span>
+        
+        
+        <span class="button next">
+            <a href="https://mcwertgaming.github.io/2020/introduction/">
+                <span class="button__text">Introduction</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">
+        <span>© 2021 Damon Leven</span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="https://mcwertgaming.github.io/assets/main.js"></script>
+<script src="https://mcwertgaming.github.io/assets/prism.js"></script>
+
+
+  <script src="https://mcwertgaming.github.io/assets/languageSelector.js"></script>
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

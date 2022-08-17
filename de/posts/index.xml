@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on OpenFoxBlog</title>
+    <link>https://mcwertgaming.github.io/de/posts/</link>
+    <description>Recent content in Posts on OpenFoxBlog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>mcwertgaming@gmail.com (Damon Leven)</managingEditor>
+    <webMaster>mcwertgaming@gmail.com (Damon Leven)</webMaster>
+    <copyright>© 2021 Damon Leven</copyright>
+    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mcwertgaming.github.io/de/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ein Blick hinter die Kulissen</title>
+      <link>https://mcwertgaming.github.io/de/2020/ein-blick-hinter-die-kulissen/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      <author>mcwertgaming@gmail.com (Damon Leven)</author>
+      <guid>https://mcwertgaming.github.io/de/2020/ein-blick-hinter-die-kulissen/</guid>
+      <description>In diesem Post erkläre ich, wie der OpenFoxBlog hinter den Kulissen aus einer Technischen Sicht funktioniert. Hierbei werde ich auf die Technische Lösung und die aufgetauchten Probleme dieses Blogs eingehen.
+English version
+Wie wurde dieser Blog erstellt? Wie ich bereits in meinem vorherigen Post beschrieben habe, benutze ich für diesen Blog Hugo als statischen Website Generator. Aber was bedeutet das eigentlich? Und warum schreibe ich nicht einfach richtige HTML Seiten oder nehme medium oder WordPress?</description>
+      <content>&lt;p&gt;In diesem Post erkläre ich, wie der OpenFoxBlog hinter den Kulissen aus einer Technischen Sicht funktioniert. Hierbei werde ich auf die Technische Lösung und die aufgetauchten Probleme dieses Blogs eingehen.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/&#34;&gt;English version&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;wie-wurde-dieser-blog-erstellt&#34;&gt;Wie wurde dieser Blog erstellt?&lt;/h1&gt;
+&lt;p&gt;Wie ich bereits &lt;a href=&#34;https://mcwertgaming.github.io/de/2020/einf%C3%BChrung/#wie-kam-es-zu-diesem-blog&#34;&gt;in meinem vorherigen Post&lt;/a&gt; beschrieben habe, benutze ich für diesen Blog Hugo als statischen Website Generator. Aber was bedeutet das eigentlich? Und warum schreibe ich nicht einfach richtige HTML Seiten oder nehme medium oder WordPress?&lt;/p&gt;
+&lt;h1 id=&#34;warum-nicht-einfach-medium-oder-wordpress&#34;&gt;Warum nicht einfach medium oder WordPress?&lt;/h1&gt;
+&lt;p&gt;Zunächst muss ich sagen, dass ich eine generelle Abneigung gegenüber WordPress habe. Geschrieben in altem PHP und durchlöchert mit vielen Problemen und Sicherheitsrisiken. Dazu kommt leider auch noch, dass ein Web Server Geld kostet und ich würde die Webseite ungern von zu Hause hosten, weil Web Server immer die ersten Ziele von automatischen Angriffen im Internet sind. Da WordPress damit aus meiner Entscheidung ausfällt, bleibt noch medium. Medium ist quasi eine Webseite, auf der man seine Blog Artikel einfach veröffentlichen kann. Da es hier nicht um ein generelles Thema geht, ist das tatsächlich sogar eine denkbare Alternative für mich. Allerdings habe ich mittlerweile viel Kritik an medium und daran, dass sie wohl aktiv versuchen die Artikel ihrer User aktiv zu monetarisieren. Ich möchte kein Geld mit meinen Artikeln machen und möchte auch, dass sie jeder kostenlos und ohne Werbung oder ähnlichen lesen kann. Ich möchte meine Gedanken auf den Bildschirm bringen und nicht Geld in meinen Geldbeutel.&lt;/p&gt;
+&lt;h1 id=&#34;was-ist-ein-statischer-website-generator&#34;&gt;Was ist ein Statischer Website Generator?&lt;/h1&gt;
+&lt;p&gt;Bevor ich die Frage beantworte, möchte ich kurz erklären wie der Blog überhaupt bei euch auf dem Bildschirm landet. Dieser Blog liegt bei GitHub &lt;a href=&#34;https://github.com/MCWertGaming/mcwertgaming.github.io&#34;&gt;in einem öffentlichen git repository&lt;/a&gt; und wird bei jedem commit automatisch neu generiert. Diese Generierung macht der Statische Website Generator. Dieser bekommt ein selbst erstelltes, oder eines der vielen frei verfügbaren Themes und die Seiten, entweder direkt als HTML5 Seite, oder z.B. als markdown. Bei generieren der Webseite geht der Generator dann durch jede Seite und kopiert den Inhalt in das Theme. Das hat den Vorteil, dass man einmal das Layout der Seite erstellt und dann dieses auf alle Posts übertragen kann. Das erspart viel Arbeit, vor allem wenn man einige Zeit später etwas an der Seite ändern möchte. Gleichzeitig kann man auch RSS Feeds und Übersichten von Artikeln generieren lassen. Klar, dafuer speziell gibt es überall Funktionen, auch WordPress und ähnliche Tools können das.
+Aber mein Lieblings Feature ist, dass ich die Artikel einfach in markdown schreiben kann. Markdown ist ein einfaches und mittlerweile auch weit verbreitetes Textformatierungssystem. Auch wenn man alle Formatierung Optionen von markdown auch direkt in HTML machen kann, ist die Syntax viel einfacher. Hier ein kleines Beispiel:&lt;/p&gt;
+&lt;p&gt;So sieht es gerendert aus:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;h1 id=&#34;ein-test&#34;&gt;Ein Test&lt;/h1&gt;
+&lt;p&gt;Dies ist ein kleiner Test für markdown / HTML Unterschiede.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Erster Teil einer Liste&lt;/li&gt;
+&lt;li&gt;Zweiter Teil einer Liste&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;kleinere-überschrift&#34;&gt;Kleinere Überschrift&lt;/h2&gt;
+&lt;p&gt;Ein weiterer Test.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://mcwertgaming.github.io/&#34;&gt;Ein Link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://mcwertgaming.github.io/img/free-images/panorama.svg&#34; alt=&#34;Ein Bild&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Fett&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Kursiv&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;Durch gestrichen&lt;/del&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So wird es in markdown geschrieben:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# Ein Test
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Dies ist ein kleiner Test für markdown / HTMl Unterschiede.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; Erster Teil einer Liste
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; Zweiter Teil einer Liste
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## Kleinere Überschrift
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;Ein weiterer Test.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#f92672&#34;&gt;Ein Link&lt;/span&gt;](&lt;span style=&#34;color:#a6e22e&#34;&gt;/&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;![&lt;span style=&#34;color:#f92672&#34;&gt;Ein Bild&lt;/span&gt;](&lt;span style=&#34;color:#a6e22e&#34;&gt;/img/free-images/panorama.svg&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;font-weight:bold&#34;&gt;**Fett**&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;font-style:italic&#34;&gt;*Kursiv*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;~~Durch gestrichen~~&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So wird es in HTML5 geschrieben:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;h1&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;ein-test&amp;#34;&lt;/span&gt;&amp;gt;Ein Test&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;h1&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;Dies ist ein kleiner Test für markdown / HTMl Unterschiede.&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;ul&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;Erster Teil einer Liste&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;Zweiter Teil einer Liste&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;ul&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;h2&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;kleinere-berschrift&amp;#34;&lt;/span&gt;&amp;gt;Kleinere Überschrift&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;h2&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;Ein weiterer Test.&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://mcwertgaming.github.io/&amp;#34;&lt;/span&gt;&amp;gt;Ein Link&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://mcwertgaming.github.io/img/free-images/panorama.svg&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Ein Bild&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;strong&lt;/span&gt;&amp;gt;Fett&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;strong&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;em&lt;/span&gt;&amp;gt;Kursiv&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;em&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;del&lt;/span&gt;&amp;gt;Durch gestrichen&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;del&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Wie hier klar ersichtlich wird, ist markdown um einiges einfacher und schneller zu schreiben. Außerdem möchte ich kein Web Development machen, weil mir das einfach überhaupt nicht gefällt. Daher kann ich hiermit einfach meine Blogs in markdown schreiben ohne, dass ich auch nur eine Sekunde HTML berühren muss.&lt;/p&gt;
+&lt;h1 id=&#34;warum-hugo&#34;&gt;Warum Hugo?&lt;/h1&gt;
+&lt;p&gt;Wie ich ja auch schon in meinem letzten Post erwähnt habe, habe ich in der Alten Version dieses Blogs noch Jekyll als Statischen Webseiten Generator benutzt. Der Grund, warum ich Jekyll zuerst benutzt habe, war, dass Jekyll direkt in GitHub Pages eingebaut ist (welche ich übrigens benutze, um meine Webseite kostenlos hosten zu lassen). Das bringt den Vorteil, dass man keine Konfiguration vornehmen muss, damit der Blog funktioniert. Auch das Plugin System von Jekyll war sehr überzeugend, weil es einfach alles mitbringt und damit viel für mich einfacher macht, bzw. mir viel Arbeit abnimmt. Leider brachte der Generator auch viele Probleme mit sich. Z.B. habe ich es nicht hinbekommen meine Seite zweisprachig zu machen und die Themes haben mir alle nicht so wirklich gefallen.
+Hugo auf der anderen Seite hat vollen support für zweisprachige Seiten eingebaut und bietet gleichzeitig auch viele andere Sachen, wie ein vernünftiges integrieren von Themes und der Möglichkeit diese Themes parallel zur Seite updaten zu können. Gleichzeitig habe ich das auf diesem Blog benutzte Theme dort gefunden.&lt;/p&gt;
+&lt;h1 id=&#34;probleme-mit-hugo&#34;&gt;Probleme mit Hugo&lt;/h1&gt;
+&lt;p&gt;So wie bei eigentlich allen Dingen in der Programmierung gab es auch bei Hugo ein Paar Probleme. Es fing an mit der Strukturierung der Webseite. Hugo erstellt die Webseiten ganz anders, als z.B. Jekyll.
+Statt einfach HTML Seiten mit den jeweiligen Namen zu erstellen, erstellt Hugo Ordner mit dem Namen der jeweiligen Seite und erstellt in diesem Ordner eine index.html Datei. Das war sehr komisch am Anfang, hat aber den Vorteil, dass die URLs in der URL Leiste nicht mehr die .html Endung haben, sondern einfach den Ordner bzw. Seiten Namen.
+Sonst lief alles super. Das Erstellen von neuen Seiten geht einfach so und auch das Bearbeiten des themes ist in der Hugo Konfigurations Datei gelöst, ohne dass ich das theme manuell bearbeiten muss.
+Zum Schluss gab es allerdings dann doch noch ein großes Problem. Die RSS Feed Integration ist für meinen Anwendungsfall sehr schlecht gemacht. Er wird automatisch erstellt, sogar für alle Sprachen, aber nur einer von beiden wird als html tag in die Seite hinzugefügt (damit man die RSS Feeds einfach mit einem Feed Reader finden kann). Dazu kam, dass nur der erste Absatz in die RSS Feeds hinzugefügt wurde. Nach dem Ändern ging allerdings der RSS nicht mehr, weil das konvertieren von markdown zu html den RSS Feed ungültig gemacht hat. Wie ich dieses Problem gelöst habe, werde ich in einem kommenden Post genauerer erklären.&lt;/p&gt;
+&lt;p&gt;Das war es für den heutigen Artikel, ich hoffe, dass ich einen kleinen Einblick hinter die Kulissen dieses Blogs geben konnte und wünsche euch noch ein paar Rest Weihnachtsstimmung und einen guten Rutsch ins neue Jahr!&lt;/p&gt;
+&lt;h4 id=&#34;frohes-programmieren&#34;&gt;Frohes Programmieren!&lt;/h4&gt;
+&lt;p&gt;Quellen von hier benutzter software und assets koennen &lt;a href=&#34;https://mcwertgaming.github.io/de/%C3%BCber-mich/#in-dieser-seite-verwendete-software&#34;&gt;hier&lt;/a&gt; gefunden werden.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Einführung</title>
+      <link>https://mcwertgaming.github.io/de/2020/einf%C3%BChrung/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0000</pubDate>
+      <author>mcwertgaming@gmail.com (Damon Leven)</author>
+      <guid>https://mcwertgaming.github.io/de/2020/einf%C3%BChrung/</guid>
+      <description>Um diesen Blog zu starten, wird es in diesem Artikel um meine Intensionen für diesen Blog gehen. Ich werde die Entstehung und den Sinn dieses Blogs erläutern und ein Paar kleine Einblicke hinter die Kulissen geben. Auch um die Themen und Zielgruppen dieses Blogs soll es hier gehen.
+English version
+Wie kam es zu diesem Blog? Die Idee für diesen Blog hatte ich bereits vor einiger Zeit. Als ich angefangen habe Programmieren zu lernen bin ich immer wieder auf Blogs gestoßen.</description>
+      <content>&lt;p&gt;Um diesen Blog zu starten, wird es in diesem Artikel um meine Intensionen für diesen Blog gehen. Ich werde die Entstehung und den Sinn dieses Blogs erläutern und ein Paar kleine Einblicke hinter die Kulissen geben. Auch um die Themen und Zielgruppen dieses Blogs soll es hier gehen.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://mcwertgaming.github.io/2020/introduction&#34;&gt;English version&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;wie-kam-es-zu-diesem-blog&#34;&gt;Wie kam es zu diesem Blog?&lt;/h1&gt;
+&lt;p&gt;Die Idee für diesen Blog hatte ich bereits vor einiger Zeit. Als ich angefangen habe Programmieren zu lernen bin ich immer wieder auf Blogs gestoßen. Gleichzeitig habe ich aber auch Projekte (vor allem Libraries) gefunden, welche gar nicht oder kaum Dokumentiert sind. Diese Ereignisse und natürlich auch einfach meine Begeisterung für das Open Source Konzept haben mich immer weiter dazu gebracht es wirklich mal zu versuchen selbst zu bloggen. Tatsächlich ist dies nicht mein erster Anlauf einen Blog zu starten. Die alte Version des OpenFoxBlogs war nur in Deutsch und ging leider auch nur bis zum dritten Blogpost. Grund für das Scheitern des Blogs war, dass ich mir das Design nicht gefallen hat und dass es mir nicht gefallen hat nur in Deutsch zu bloggen (vor allem, weil bei Programmierung fast nichts in Deutsch gemacht wird). Mein Gedanke damals war zuerst den Blog zu überarbeiten und dann schließlich weiter zu machen. Leider habe ich es dann fast ein Jahr vor mir hergeschoben. Ein entscheidender Grund dafür war z.B. auch, dass ich Jekyll als statistischen Website Generator benutzt habe. Jekyll ist an sich ein richtig gutes Tool für Blogging und profitiert sehr von GitHubs direkter Integration in GitHub Pages. Das entscheidende Problem ist aber leiser, dass man alles selber machen muss. Klar, es gibt viele Plugins, die einiges für dich machen, aber da meine HTML Kenntnisse sehr limitiert sind und mir HTML Scripting gar keinen Spaß macht, habe ich ewig damit gekämpft den Blog zwei sprachig zu gestalten. Ich habe sogar überlegt zwei Webseiten parallel zu machen. Am Ende habe ich Jekyll einfach gegen Hugo ausgetauscht. Hugo ist auch ein Statischer Website Generator, aber dieser hat direkt Integrationen für mehrsprachige Seiten und nimmt einem viel einfach ab. Einen Blogartikel darüber, wie ich meinen Blog Technisch umgesetzt habe wird bald kommen!&lt;/p&gt;
+&lt;h1 id=&#34;was-möchte-ich-mit-diesem-blog-erreichen&#34;&gt;Was möchte ich mit diesem Blog erreichen?&lt;/h1&gt;
+&lt;p&gt;Grundlegend geht es mir vor allem darum, meine Erkenntnisse und Errungenschaften zu dokumentieren. Allerding möchte und werde ich das in Form von Artikel machen, damit jeder meine Erkenntnisse einfach und schnell anwenden und verstehen kann. Damit möchte ich euch Programmierung und Technologie näherbringen. Vielleicht sogar den einen oder anderen dafür begeistern und / oder einen Start in diese Abstrakte Welt geben. Es gibt ohne hin schon viel zu wenige Programmierer, die Programmierung ernst meinen. Und dank Großen Firmen, wie RedHat, Microsoft und Canonical sehe ich auch die Open Source Community in Gefahr. Ich möchte hiermit der Open Source-, Entwickler-, Geekcommunity, aber auch allen anderen etwas zurückgeben und euch allen da draußen das (entwickler-) Leben wenigstens ein bisschen einfacher machen.&lt;/p&gt;
+&lt;h1 id=&#34;worum-wird-es-in-diesem-blog-gehen&#34;&gt;Worum wird es in diesem Blog gehen?&lt;/h1&gt;
+&lt;p&gt;Dieser Blog wird alle möglichen Themen behandeln. Grundlegend wird der Fokus aber in Richtung Programmierung und Technologie gehen. Das alles gemischt mit weiteren, kleineren Themen, z.B. Erfahrungen aus meinem Leben, oder Meinungen zu bestimmten Themen. Bei Programmierung wird der Fokus auf Desktopentwicklung mit C++ sein. Dabei allerdings sowohl Programmierung in der Konsole und als grafische Benutzeroberfläche. Um genau zu sein, wird es vor allem um Spieleentwicklung gehen.&lt;/p&gt;
+&lt;p&gt;Ich hoffe, dass ich hiermit einen guten Überblick über diesen Blog und meine Pläne für ihn erläutern konnte.&lt;/p&gt;
+&lt;h4 id=&#34;frohes-programmieren&#34;&gt;Frohes Programmieren!&lt;/h4&gt;
+&lt;p&gt;Quellen von hier benutzter software und assets koennen &lt;a href=&#34;https://mcwertgaming.github.io/de/%C3%BCber-mich/#in-dieser-seite-verwendete-software&#34;&gt;hier&lt;/a&gt; gefunden werden.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

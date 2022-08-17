@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on OpenFoxBlog</title>
+    <link>https://mcwertgaming.github.io/posts/</link>
+    <description>Recent content in Posts on OpenFoxBlog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>mcwertgaming@gmail.com (Damon Leven)</managingEditor>
+    <webMaster>mcwertgaming@gmail.com (Damon Leven)</webMaster>
+    <copyright>© 2021 Damon Leven</copyright>
+    <lastBuildDate>Wed, 26 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mcwertgaming.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setting up step-ca with docker on CentOS</title>
+      <link>https://mcwertgaming.github.io/2021/setting-up-step-ca-with-docker-on-centos/</link>
+      <pubDate>Wed, 26 May 2021 00:00:00 +0000</pubDate>
+      <author>mcwertgaming@gmail.com (Damon Leven)</author>
+      <guid>https://mcwertgaming.github.io/2021/setting-up-step-ca-with-docker-on-centos/</guid>
+      <description>In this small blog post, I&amp;rsquo;ll explain how I&amp;rsquo;m running my personal Certification Authority (CA) at home for securing my local web traffic with automated encryption.
+German version (soon)
+Why Smallstep certification authority? My goal was to protect my local traffic with SSL but without having to deal with certificates. The problem with using Let&amp;rsquo;s Encrypt is that it won&amp;rsquo;t work without exposing the web service on port 80 / 443 to the public which I don&amp;rsquo;t want to do for all of my services.</description>
+      <content>&lt;p&gt;In this small blog post, I&amp;rsquo;ll explain how I&amp;rsquo;m running my personal Certification Authority (CA) at home for securing my local web traffic with automated encryption.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://xx&#34;&gt;German version&lt;/a&gt; (soon)&lt;/p&gt;
+&lt;h1 id=&#34;why-smallstep-certification-authority&#34;&gt;Why Smallstep certification authority?&lt;/h1&gt;
+&lt;p&gt;My goal was to protect my local traffic with SSL but without having to deal with certificates. The problem with using Let&amp;rsquo;s Encrypt is that it won&amp;rsquo;t work without exposing the web service on port 80 / 443 to the public which I don&amp;rsquo;t want to do for all of my services. Also we used Microsoft Active Directory for creating certificates at first, because my father (who operates the server at his home) requires it anyway for his work. But that was really complicated as it&amp;rsquo;s not supporting ACME at all. That means that you would have to create all certificates manually. Another problem was that there is not really a good way to do order certificates with a linux host. That would have meant, that I&amp;rsquo;d need to create the certification request on my destination server, then copy it to a Windows machine, then create the certificate, then copy it back and finally I&amp;rsquo;m able to use it on my service. That&amp;rsquo;s unnecessary work if you ask me! So I searched for a way to completely automate the certification process. The most popular protocol for that is probably ACME, which offers ACME compatible clients to order certificates themselves without requiring any interaction (except some small bits of configuration of course).&lt;/p&gt;
+&lt;p&gt;If you are searching for self-hosted open-source certification authorities on GitHub, you will probably find these two projects:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/smallstep/certificates&#34;&gt;smallstep/certificates&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/letsencrypt/boulder&#34;&gt;letsencrypt/boulder&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I actually didn&amp;rsquo;t even knew before that let&amp;rsquo;s encrypt is open-source! In my opinion it&amp;rsquo;s really nice, but sadly there is not that much documentation on it&amp;hellip;
+Going with that, stepstone&amp;rsquo;s solution comes with a big and detailed documentation. Also there are many other resources on setting it up and using it.
+Another cool thing is that they provide good examples on using their solution with the most popular ACME clients and reverse-proxies, which was helping me a lot.&lt;/p&gt;
+&lt;h1 id=&#34;why-centos&#34;&gt;Why CentOS?&lt;/h1&gt;
+&lt;p&gt;CentOS is in my opinion the best operating system for servers, because it&amp;rsquo;s secure and there are no issues if you decide to just let it automatically update itself without having to do it manually or checking it&amp;rsquo;s up-to-date state. I&amp;rsquo;m using the CentOS 7 LXC provided by my Proxmox VE server, because LXC&amp;rsquo;s are using way less resources than VMs. To run docker, you have to enable nesting in your proxmox configuration and I personally would strongly suggest to make sure the LXC is unprivileged (note that this is not required, if you are running CentOS 7 in a VM).
+I also recommend using CentOS 7 because CentOS 8 is only running until the end of the year and the docker support is discontinued.&lt;/p&gt;
+&lt;p&gt;Also note that CentOS 7 is only supported until 2024 and it&amp;rsquo;s possible, that RedHat is cutting down it&amp;rsquo;s support like they did with CentOS 8. I wouldn&amp;rsquo;t recommend CentOS stream, as it&amp;rsquo;s not as secure and stable as the &amp;ldquo;normal&amp;rdquo; CentOS versions used to be. Please see &lt;a href=&#34;https://rockylinux.org/&#34;&gt;RockyLinux&lt;/a&gt; (currently in pre-release), &lt;a href=&#34;https://almalinux.org/&#34;&gt;AlmaLinux&lt;/a&gt; and &lt;a href=&#34;https://www.cloudlinux.com/&#34;&gt;CloudLinux&lt;/a&gt; for good replacements. The installation and usage will be mostly (if not completely) the same.&lt;/p&gt;
+&lt;h1 id=&#34;installing-docker&#34;&gt;Installing docker&lt;/h1&gt;
+&lt;p&gt;To install docker, You only need to add the official docker repository to your Package Manager many and you are ready to go:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# remove conflicting packages&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum remove docker &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-client &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-client-latest &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-common &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-latest &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-latest-logrotate &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-logrotate &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;                  docker-engine
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# install yum-utils for the yum-config-manager&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum install -y yum-utils
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# install the docker ce repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum-config-manager &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    --add-repo &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    https://download.docker.com/linux/centos/docker-ce.repo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# finally install docker&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum install docker-ce docker-ce-cli containerd.io
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&#34;https://docs.docker.com/engine/install/centos/&#34;&gt;Taken from the official docker documentation.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And you are ready to go!&lt;/p&gt;
+&lt;h1 id=&#34;running-the-authentication-authority-with-docker&#34;&gt;Running the Authentication Authority with docker&lt;/h1&gt;
+&lt;p&gt;Smallstep is providing their ca on DockerHub &lt;a href=&#34;https://hub.docker.com/r/smallstep/step-ca&#34;&gt;smallstep/step-ca
+&lt;/a&gt;. You will find more information there. The official dockerfile can be found &lt;a href=&#34;https://github.com/smallstep/certificates/blob/master/docker/Dockerfile.step-ca&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;prepare-the-certification-authority&#34;&gt;prepare the certification authority&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# pull the latest docker image&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker pull smallstep/step-ca
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# create a volume to store persistent data outside of the container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker volume create step
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# start a shell inside of the container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -it -v step:/home/step smallstep/step-ca sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now you should have a shell inside of the step-ca container open. We have to prepare the volume before we can use our ca. For that we have the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;step ca init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This basically asks you a few questions about the purpose of the ca (which will be stored inside of the &amp;lsquo;root certificate&amp;rsquo;) and create your root certificate (which is required for signing the ones of your services) and creates the required configuration files. The output should look something like this:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ step ca init
+✔ What would you like to name your new PKI?: Smallstep
+✔ What DNS names or IP addresses would you like to add to your new CA? localhost
+✔ What address will your new CA listen at?: :9000
+✔ What would you like to name the first provisioner for your new CA?: admin
+✔ What do you want your password to be?: &amp;lt;your password here&amp;gt;
+
+Generating root certificate...
+all done!
+
+Generating intermediate certificate...
+all done!
+
+✔ Root certificate: /home/step/certs/root_ca.crt
+✔ Root private key: /home/step/secrets/root_ca_key
+✔ Root fingerprint: f9e45ae9ec5d42d702ce39fd9f3125372ce54d0b29a5ff3016b31d9b887a61a4
+✔ Intermediate certificate: /home/step/certs/intermediate_ca.crt
+✔ Intermediate private key: /home/step/secrets/intermediate_ca_key
+✔ Default configuration: /home/step/config/defaults.json
+✔ Certificate Authority configuration: /home/step/config/ca.json
+
+Your PKI is ready to go. To generate certificates for individual services see &amp;#39;step help ca`}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;a href=&#34;https://hub.docker.com/r/smallstep/step-ca&#34;&gt;Taken from the official docker container page on DockerHub&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Please store your password somewhere secure and note the fingerprint (does not have to be secure) for later usage.
+Now we have to store the password somewhere for the container. The password is basically used for encrypting the private key for security reasons. That means that the Key file can only be used with the given password. The official way is to just store the password inside of &lt;code&gt;/home/step/secrets/password&lt;/code&gt; as unencrypted string.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that this method is not secure in any way and should only be used for testing or local use. If you want to do it really secure, smallstep recommends to use an hardware encrypted device for storing and accessing the private key (yubikey for example, currently 45$ on amazon). &lt;a href=&#34;https://smallstep.com/blog/build-a-tiny-ca-with-raspberry-pi-yubikey/&#34;&gt;An Really good walk through on how to set it up with the Raspberry pi 4 is available on their blog&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To do that, you basically just have to do:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vi /home/step/secrets/password
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and paste your password in there.
+If you are unfamiliar with vi, you just can install nano with &lt;code&gt;apk add nano&lt;/code&gt; or look at these instructions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;press CRTL+O to enter the write mode&lt;/li&gt;
+&lt;li&gt;paste your password&lt;/li&gt;
+&lt;li&gt;if the first characters get removed by what ever goes wrong here just add some new lines, paste it and then remove them again&lt;/li&gt;
+&lt;li&gt;press ESC to exit write mode&lt;/li&gt;
+&lt;li&gt;Press :wq to write the changes to the file system and quit vi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now the CA is ready to use!&lt;/p&gt;
+&lt;h2 id=&#34;adding-acme-support&#34;&gt;adding ACME support&lt;/h2&gt;
+&lt;p&gt;Step-ca is supporting ACME out-of-the-box, but it&amp;rsquo;s not enabled by default. To enable it, just add the ACME provisioner to your configuration:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;step ca provisioner add acme --type ACME
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And we are done! Now you can exit the container with &lt;code&gt;exit&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;run-the-ca-for-the-first-time&#34;&gt;run the ca for the first time:&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d -p 127.0.0.1:9000:9000 -v step:/home/step smallstep/step-ca
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This starts the ca in the background on port 9000. If you would rather have the ca on port 443 (so you don&amp;rsquo;t have to specify the port in the URL) just change the port&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d -p 127.0.0.1:443:9000 -v step:/home/step smallstep/step-ca
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To use the ca in your local network, you have to change the port binding to your servers IP. This is an example for running it on the ip 10.10.10.40 on port 443:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d -p 10.10.10.44:443:9000 -v step:/home/step smallstep/step-ca
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now you can actually use your ca!&lt;/p&gt;
+&lt;h2 id=&#34;making-the-ca-autostart&#34;&gt;making the ca &amp;ldquo;autostart&amp;rdquo;&lt;/h2&gt;
+&lt;p&gt;There are quiet a few ways to autostart containers with docker. I usually run them with systemd, as it&amp;rsquo;s also used for the system&amp;rsquo;s services.&lt;/p&gt;
+&lt;p&gt;This is an example systemd unit file:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# step-ca sample systemd unit
+# located in /usr/local/lib/systemd/system/step-ca.service
+[Unit]
+Description=Smallstep certification authority
+Requires=docker.service
+After=docker.service
+    
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker kill step-ca
+ExecStartPre=-/usr/bin/docker rm step-ca
+ExecStartPre=-/usr/bin/docker pull smallstep/step-ca
+ExecStart=/usr/bin/docker run --name step-ca -p 10.10.10.40:443:443 -v step:/home/step smallstep/step-ca
+ExecStop=/usr/bin/docker stop step-ca
+    
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Now you just need to start and enable your newly created service:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl start step-ca
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl enable step-ca
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;testing-the-ca-for-functionality&#34;&gt;Testing the CA for functionality&lt;/h1&gt;
+&lt;p&gt;Now, after our ca is finally running, we just have to check if it&amp;rsquo;s working correctly. In the same process, we are also making the &lt;code&gt;step&lt;/code&gt; utility ready to be used on your local machine to interact with the ca.&lt;/p&gt;
+&lt;h2 id=&#34;installing-the-step-cli&#34;&gt;installing the step cli&lt;/h2&gt;
+&lt;p&gt;There are some distributions, that are packaging it already, but sadly not all.&lt;/p&gt;
+&lt;p&gt;On Archlinux and Archlinux based distributions:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -Syu step-cli
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Please note that you need to use the &lt;code&gt;step-cli&lt;/code&gt; command instead of &lt;code&gt;step&lt;/code&gt; on Archlinux!
+This is because &lt;code&gt;step&lt;/code&gt; is already a packaged binary&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;On MacOS using brew:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;brew install step
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;On Debian:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;VERSION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.15.16
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wget https://github.com/smallstep/cli/releases/download/v&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;VERSION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;/step-cli_&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;VERSION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;_amd64.deb
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo dpkg -i step-cli_&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;VERSION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;_amd64.deb
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Please note to change the VERSION variable to the &lt;a href=&#34;https://github.com/smallstep/cli/releases/latest&#34;&gt;newest one on github&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;On Alpine Linux:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# add the testing repository, as step is not yet in the stable ones&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://dl-cdn.alpinelinux.org/alpine/edge/testing&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /etc/apk/repositories
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# finally install it using the apk package manager&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apk add step-cli
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;On NixOS:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The package is located &lt;a href=&#34;https://search.nixos.org/packages?channel=20.09&amp;amp;show=step-cli&amp;amp;from=0&amp;amp;size=50&amp;amp;sort=relevance&amp;amp;query=step-cli&#34;&gt;here&lt;/a&gt;, you might have to add the testing repository first, but I think that you know hoe to install packages if you are using NixOS :)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;On other Linux distributions:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;VERSION&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.15.16
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wget -O step.tar.gz https://github.com/smallstep/cli/releases/download/v&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;VERSION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;/step_linux_&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;VERSION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;_amd64.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -xf step.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cp step_&lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;VERSION&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;/bin/step /usr/bin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Please note to change the VERSION variable to the &lt;a href=&#34;https://github.com/smallstep/cli/releases/latest&#34;&gt;newest one on github&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To check if the installed package works, just print out the version:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;step --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;Note that some systems you need to run &lt;code&gt;step-cli --version&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;actually-testing-your-ca&#34;&gt;Actually testing your CA&lt;/h2&gt;
+&lt;p&gt;The first thing we will do is bootstraping our ca. It means that we download our ca&amp;rsquo;s root certificate validating it with our ca&amp;rsquo;s fingerprint and storing a configuration file for the step util for saving our configuration.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;step ca bootstrap --ca-url https://ca.example.org &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --fingerprint &amp;lt;fingerprint&amp;gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  --install &lt;span style=&#34;color:#75715e&#34;&gt;# optional, should install the root cert on your system, but does not work for me on Archlinux, CentOS and alpine&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To install the certificate into your systems trust store, you have to check your systems documentation as it can vary a lot between different systems.&lt;/p&gt;
+&lt;p&gt;finally you can test it:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl ca.example:port/health
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If it&amp;rsquo;s successful, you should see the following:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ curl ca.example:port/health
+{&amp;#34;status&amp;#34;:&amp;#34;ok&amp;#34;}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;And now you are done! See my other posts about what and how to do after finishing setting up the ca:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Setting up Caddy reverse proxy with local CA (coming soon)&lt;/li&gt;
+&lt;li&gt;Setting up Proxmox with local CA (coming soon)&lt;/li&gt;
+&lt;li&gt;Setting up Adguard with local CA (coming soon)&lt;/li&gt;
+&lt;li&gt;Exposing docker container with Caddy and local CA (coming soon)&lt;/li&gt;
+&lt;li&gt;Exposing services on multiple servers securely to the web (coming soon)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;happy-coding&#34;&gt;Happy coding!&lt;/h4&gt;
+&lt;p&gt;Sources of used software and assets on this site can be found &lt;a href=&#34;https://mcwertgaming.github.io/about/#software-used-on-this-site&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>A look behind the scenes</title>
+      <link>https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      <author>mcwertgaming@gmail.com (Damon Leven)</author>
+      <guid>https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/</guid>
+      <description>In this post, I will give some insight on the technical behind the scenes of OpenFoxBlog. This will include how it is technically accomplished and what problems I encountered on my way. later on, I will explain why I have chosen the way I have in matter of the tools and services.
+German version
+How was this blog setup? I already talked in an earlier post, that I&amp;rsquo;m using Hugo as static website generator.</description>
+      <content>&lt;p&gt;In this post, I will give some insight on the technical behind the scenes of OpenFoxBlog. This will include how it is technically accomplished and what problems I encountered on my way. later on, I will explain why I have chosen the way I have in matter of the tools and services.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://mcwertgaming.github.io/de/2020/ein-blick-hinter-die-kulissen/&#34;&gt;German version&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;how-was-this-blog-setup&#34;&gt;How was this blog setup?&lt;/h1&gt;
+&lt;p&gt;I already talked &lt;a href=&#34;https://mcwertgaming.github.io/2020/introduction/#how-did-this-blog-come-about&#34;&gt;in an earlier post&lt;/a&gt;, that I&amp;rsquo;m using Hugo as static website generator. But what does that mean? And why am I not just writing HTML files directly or am using something like medium or WordPress?&lt;/p&gt;
+&lt;h1 id=&#34;why-not-just-medium-or-wordpress&#34;&gt;Why not just medium or Wordpress?&lt;/h1&gt;
+&lt;p&gt;First of all, I have a big problem with WordPress. Written in old PHP and lacking on proper security with a lot of problems and downsides. At the same time, I would have to buy or host a webserver to serve my site which would cost me money (even though, there are some free ones available I think). Because WordPress Isn&amp;rsquo;t an option I would go with, there is only medium left. I haven&amp;rsquo;t tried medium myself, but I read multiple times now, that people are criticizing on how medium tries to monetize their blog and posts. I really dislike that, because I want everyone to be able to read my blog without paying for it or having to look at dumb ads. Not to forget the tracking on free sites. In the end I chose to create my blog with Hugo and host it for free on GitHub. I want to get my thought onto the screen, not money into my pocket.&lt;/p&gt;
+&lt;h1 id=&#34;what-is-a-static-website-generator&#34;&gt;What is a static website generator?&lt;/h1&gt;
+&lt;p&gt;before I get into the question, I quickly want to give a little insight into how my blog comes onto your screen. This blog is located on GitHub inside a &lt;a href=&#34;https://github.com/MCWertGaming/mcwertgaming.github.io&#34;&gt;public repository&lt;/a&gt; and gets automatically generated on every commit. This generation is done by the static website generator. You simply provide a theme to the generator as well as your posts in form of html or markdown pages and it will put the contents of your posts into the theme. The cool thing about this method is that the theme and in the end the design of every page will be exactly the same and you don&amp;rsquo;t have to manually create templates to edit for your posts. At the same time, you can just roll out a new theme or edit it without the need of updating every page manually. The generator can even generate RSS feeds and homepages with your latest posts on it after a before defines template (even though, WordPress and similar software can do that as well).
+But my personal favorite is the ability to just write you blog-posts in pure markdown. Markdown is a well-known and wide spread text formatting system and it provides the same options for formatting as html but with more user-friendly syntax. To visualize this quickly, here is an example:&lt;/p&gt;
+&lt;p&gt;The rendered version:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;h1 id=&#34;a-test&#34;&gt;A test&lt;/h1&gt;
+&lt;p&gt;This is a small test for the differences of markdown / html.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;first part of a list&lt;/li&gt;
+&lt;li&gt;second part of a list&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;smaller-heading&#34;&gt;smaller Heading&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://mcwertgaming.github.io/&#34;&gt;A link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://mcwertgaming.github.io/img/free-images/panorama.svg&#34; alt=&#34;A picture&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bold&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Emphasized&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;Strikethrough&lt;/del&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The markdown code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# A test
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;This is a small test for the differences of markdown / html.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; first part of a list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; second part of a list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## smaller Heading
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#f92672&#34;&gt;A link&lt;/span&gt;](&lt;span style=&#34;color:#a6e22e&#34;&gt;/&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;![&lt;span style=&#34;color:#f92672&#34;&gt;A picture&lt;/span&gt;](&lt;span style=&#34;color:#a6e22e&#34;&gt;/img/free-images/panorama.svg&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;font-weight:bold&#34;&gt;**Bold**&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;font-style:italic&#34;&gt;*Emphasized*&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;~~Strikethrough~~&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The same in html:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;h1&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;a-test&amp;#34;&lt;/span&gt;&amp;gt;A test&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;h1&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;This is a small test for the differences of markdown / html.&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;ul&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;first part of a list&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;second part of a list&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;h2&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;smaller-heading&amp;#34;&lt;/span&gt;&amp;gt;smaller Heading&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;h2&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;li&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;ul&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;&amp;gt;A link&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;a&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;img&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/free-images/panorama.svg&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;alt&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;A picture&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;strong&lt;/span&gt;&amp;gt;Bold&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;strong&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;em&lt;/span&gt;&amp;gt;Emphasized&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;em&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;del&lt;/span&gt;&amp;gt;Strikethrough&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;del&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We can clearly see, that markdown&amp;rsquo;s syntax is a lot easier to write as well as a lot cleaner than the same in actual html. At the other hand, I really don&amp;rsquo;t like web development and would like to avoid that at least a bit so I&amp;rsquo;m even more happy about this feature.&lt;/p&gt;
+&lt;h1 id=&#34;but-why-hugo&#34;&gt;But why Hugo?&lt;/h1&gt;
+&lt;p&gt;I have already noted in my last post that I have used Jekyll on the old version of this blog but I experienced some problems and difficulties that would have cost me a lot of time. The first version of this blog was German only but I wanted to make this blog multilingual. As Jekyll don&amp;rsquo;t supports using two languages well and at the same time, I didn&amp;rsquo;t find a good theme with two languages already build in, I tried Hugo. Sure, Hugo does not offer a plugin system, but at least it has features for adding a second language built in. It also handles themes a lot better than Jekyll making it extremely easy to add themes and even update them without the need of migrating the whole site. One last thing, that made me switch, was that I found the theme I&amp;rsquo;m currently using immediately. I like It a lot more than all other themes, even on Jekyll I found.&lt;/p&gt;
+&lt;h1 id=&#34;problems-with-hugo&#34;&gt;Problems with Hugo&lt;/h1&gt;
+&lt;p&gt;Like at probably most things at programming Hugo created some problems. The first thing I encountered with was the way Hugo creates web files. Instead of creating normal html files with the site name it creates folders with the site name and places an index.html inside that. At first this is a bit weird (at least it was for me!) but makes sense in the end. Because of that the browser hides the URL has no .html extension and makes the URL look a bit cleaner.
+All other things went without problems at all. I could just create all required sites with their content and Hugo did everything other for me.
+At the end there was actually one a bit bigger problem. The default RSS feed configuration didn&amp;rsquo;t suite my needs. It just includes the first paragraph inside the feed instead of just providing the full post. After changing that, the markdown converter of Hugo included illegal character inside of the xml file and made it corrupt. I will make a dedicated post on how I fixed that real soon. stay tuned!&lt;/p&gt;
+&lt;p&gt;Thats for today&amp;rsquo;s post. I hope you enjoyed this little behind the scenes and with you some happy last Christmas days as well as a great new year!&lt;/p&gt;
+&lt;h4 id=&#34;happy-coding&#34;&gt;Happy coding!&lt;/h4&gt;
+&lt;p&gt;Sources of used software and assets on this site can be found &lt;a href=&#34;https://mcwertgaming.github.io/about/#software-used-on-this-site&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</content>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://mcwertgaming.github.io/2020/introduction/</link>
+      <pubDate>Sun, 20 Dec 2020 00:00:00 +0000</pubDate>
+      <author>mcwertgaming@gmail.com (Damon Leven)</author>
+      <guid>https://mcwertgaming.github.io/2020/introduction/</guid>
+      <description>To start this blog, this article will be about my intensions for it. I will explain the origin and the purpose of this blog and give a couple of small insights behind the scenes. Also, the topics and target groups of this blog will be discussed.
+German version
+How did this blog come about? I had the idea for this blog some time ago. When I started to learn programming, I came across blogs again and again.</description>
+      <content>&lt;p&gt;To start this blog, this article will be about my intensions for it. I will explain the origin and the purpose of this blog and give a couple of small insights behind the scenes. Also, the topics and target groups of this blog will be discussed.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://mcwertgaming.github.io/de/2020/einf%C3%BChrung&#34;&gt;German version&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;how-did-this-blog-come-about&#34;&gt;How did this blog come about?&lt;/h1&gt;
+&lt;p&gt;I had the idea for this blog some time ago. When I started to learn programming, I came across blogs again and again. But at the same time, I found projects (especially libraries) which are not documented at all or hardly. These events and of course my enthusiasm for the open-source concept made me try to blog myself. In fact, this is not my first attempt to start a blog. The old version of the OpenFoxBlog was only in German and unfortunately only went as far as the third blog post. The reason for the failure was that I didn’t like the design that much and didn’t wanted to blog only in German (especially because in programming almost nothing is done in German). My thought at that time was first to revise the blog and then finally to continue. Unfortunately, I put it off for almost a year. One of the main reasons was that I used Jekyll as a static website generator. Jekyll is in itself a really good tool for blogging and benefits a lot from GitHub’s direct integration with GitHub Pages. The crucial problem, however, is that you have to do everything yourself. Sure, there are many plugins that do some things for you, but since my HTML knowledge is very limited and I don’t enjoy scripting in that language at all, I struggled a long time to make the blog bi-lingual. I even considered making two websites in parallel. In the end I just replaced Jekyll with Hugo. Hugo is also a static website generator, but this one has direct integrations for multilingual sites and takes a lot off your plate. A blog article about how I technically implemented my blog will be coming soon!&lt;/p&gt;
+&lt;h1 id=&#34;what-do-i-want-to-achieve-with-this-blog&#34;&gt;What do I want to achieve with this blog?&lt;/h1&gt;
+&lt;p&gt;Basically, I want to document my findings and achievements. However, I want to and will do this in the form of articles, so that everyone can easily and quickly apply and understand my findings. With this I want to bring programming and technology closer to you. Maybe even inspire one or the other for it and / or give a start in this abstract world. There are already too few programmers who are serious about programming. And thanks to big companies like RedHat, Microsoft and Canonical I see the open-source community in danger. I want to give something back to the open source, developer and geek community, but also to everyone else and make the (developer) life at least a little bit easier for all of you out there.&lt;/p&gt;
+&lt;h1 id=&#34;what-will-this-blog-be-about&#34;&gt;What will this blog be about?&lt;/h1&gt;
+&lt;p&gt;This blog will cover all kinds of topics. But basically, the focus will be on programming and technology. All that mixed with other, smaller topics, e.g. experiences from my life, or opinions about certain topics. Programming will focus on desktop development with C++. However, both programming in the console and as a graphical user interface. To be more precise, it will be mainly about game development.&lt;/p&gt;
+&lt;p&gt;I hope this has given you a good overview of this blog and my plans for it. With that until the next article and stay healthy!&lt;/p&gt;
+&lt;h4 id=&#34;happy-coding&#34;&gt;Happy coding!&lt;/h4&gt;
+&lt;p&gt;Sources of used software and assets on this site can be found &lt;a href=&#34;https://mcwertgaming.github.io/about/#software-used-on-this-site&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</content>
+    </item>
+    
+  </channel>
+</rss>

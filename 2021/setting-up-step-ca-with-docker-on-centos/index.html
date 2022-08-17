@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Setting up step-ca with docker on CentOS :: OpenFoxBlog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="This post describes the process of installing and testing a local step-ca installation using docker on CentOS 7" />
+<meta name="keywords" content="[programming technology C&#43;&#43; Cpp fox opensource tutorials]" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://mcwertgaming.github.io/2021/setting-up-step-ca-with-docker-on-centos/" />
+
+
+
+
+<link rel="stylesheet" href="https://mcwertgaming.github.io/assets/style.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="https://mcwertgaming.github.io/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="https://mcwertgaming.github.io/img/favicon/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:creator" content="Damon Leven" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Setting up step-ca with docker on CentOS">
+<meta property="og:description" content="This post describes the process of installing and testing a local step-ca installation using docker on CentOS 7" />
+<meta property="og:url" content="https://mcwertgaming.github.io/2021/setting-up-step-ca-with-docker-on-centos/" />
+<meta property="og:site_name" content="OpenFoxBlog" />
+
+  
+    <meta property="og:image" content="https://mcwertgaming.github.io/img/favicon/favicon.ico">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+  <meta property="article:published_time" content="2021-05-26 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#e88c00">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#3f3f3f">
+
+
+
+</head>
+<body class="orange">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    OpenFoxBlog
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/contact/#rss-feeds">RSS</a></li>
+        
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/contact">Contact</a></li>
+        
+      
+      
+    
+
+    
+    <div class="spacer"></div>
+    <ul class="language-selector">
+      <ul class="language-selector-current">
+          <li>English ▾</li>
+      </ul>
+      <ul class="language-selector__more hidden">
+        
+        <li><a href="https://mcwertgaming.github.io/">English</a></li>
+        
+        <li><a href="https://mcwertgaming.github.io/de/">Deutsch</a></li>
+        
+      </ul>
+    </ul>
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/contact/#rss-feeds">RSS</a></li>
+      
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/contact">Contact</a></li>
+      
+    
+    
+    <hr />
+      
+        <li>
+          <a href="https://mcwertgaming.github.io/">English</a>
+        </li>
+      
+        <li>
+          <a href="https://mcwertgaming.github.io/de/">Deutsch</a>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://mcwertgaming.github.io/2021/setting-up-step-ca-with-docker-on-centos/">Setting up step-ca with docker on CentOS</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2021-05-26 [Updated: 2021-05-26]
+      </span>
+    
+    
+    <span class="post-author">:: Damon Leven</span>
+    
+  </div>
+
+  
+
+  
+
+  
+
+  <div class="post-content"><div>
+        <p>In this small blog post, I&rsquo;ll explain how I&rsquo;m running my personal Certification Authority (CA) at home for securing my local web traffic with automated encryption.</p>
+<p><a href="https://xx">German version</a> (soon)</p>
+<h1 id="why-smallstep-certification-authority">Why Smallstep certification authority?<a href="#why-smallstep-certification-authority" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>My goal was to protect my local traffic with SSL but without having to deal with certificates. The problem with using Let&rsquo;s Encrypt is that it won&rsquo;t work without exposing the web service on port 80 / 443 to the public which I don&rsquo;t want to do for all of my services. Also we used Microsoft Active Directory for creating certificates at first, because my father (who operates the server at his home) requires it anyway for his work. But that was really complicated as it&rsquo;s not supporting ACME at all. That means that you would have to create all certificates manually. Another problem was that there is not really a good way to do order certificates with a linux host. That would have meant, that I&rsquo;d need to create the certification request on my destination server, then copy it to a Windows machine, then create the certificate, then copy it back and finally I&rsquo;m able to use it on my service. That&rsquo;s unnecessary work if you ask me! So I searched for a way to completely automate the certification process. The most popular protocol for that is probably ACME, which offers ACME compatible clients to order certificates themselves without requiring any interaction (except some small bits of configuration of course).</p>
+<p>If you are searching for self-hosted open-source certification authorities on GitHub, you will probably find these two projects:</p>
+<ul>
+<li><a href="https://github.com/smallstep/certificates">smallstep/certificates</a></li>
+<li><a href="https://github.com/letsencrypt/boulder">letsencrypt/boulder</a></li>
+</ul>
+<p>I actually didn&rsquo;t even knew before that let&rsquo;s encrypt is open-source! In my opinion it&rsquo;s really nice, but sadly there is not that much documentation on it&hellip;
+Going with that, stepstone&rsquo;s solution comes with a big and detailed documentation. Also there are many other resources on setting it up and using it.
+Another cool thing is that they provide good examples on using their solution with the most popular ACME clients and reverse-proxies, which was helping me a lot.</p>
+<h1 id="why-centos">Why CentOS?<a href="#why-centos" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>CentOS is in my opinion the best operating system for servers, because it&rsquo;s secure and there are no issues if you decide to just let it automatically update itself without having to do it manually or checking it&rsquo;s up-to-date state. I&rsquo;m using the CentOS 7 LXC provided by my Proxmox VE server, because LXC&rsquo;s are using way less resources than VMs. To run docker, you have to enable nesting in your proxmox configuration and I personally would strongly suggest to make sure the LXC is unprivileged (note that this is not required, if you are running CentOS 7 in a VM).
+I also recommend using CentOS 7 because CentOS 8 is only running until the end of the year and the docker support is discontinued.</p>
+<p>Also note that CentOS 7 is only supported until 2024 and it&rsquo;s possible, that RedHat is cutting down it&rsquo;s support like they did with CentOS 8. I wouldn&rsquo;t recommend CentOS stream, as it&rsquo;s not as secure and stable as the &ldquo;normal&rdquo; CentOS versions used to be. Please see <a href="https://rockylinux.org/">RockyLinux</a> (currently in pre-release), <a href="https://almalinux.org/">AlmaLinux</a> and <a href="https://www.cloudlinux.com/">CloudLinux</a> for good replacements. The installation and usage will be mostly (if not completely) the same.</p>
+<h1 id="installing-docker">Installing docker<a href="#installing-docker" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>To install docker, You only need to add the official docker repository to your Package Manager many and you are ready to go:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># remove conflicting packages</span>
+</span></span><span style="display:flex;"><span>sudo yum remove docker <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-client <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-client-latest <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-common <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-latest <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-latest-logrotate <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-logrotate <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>                  docker-engine
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># install yum-utils for the yum-config-manager</span>
+</span></span><span style="display:flex;"><span>sudo yum install -y yum-utils
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># install the docker ce repository</span>
+</span></span><span style="display:flex;"><span>sudo yum-config-manager <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --add-repo <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    https://download.docker.com/linux/centos/docker-ce.repo
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># finally install docker</span>
+</span></span><span style="display:flex;"><span>sudo yum install docker-ce docker-ce-cli containerd.io
+</span></span></code></pre></div><blockquote>
+<p><em><a href="https://docs.docker.com/engine/install/centos/">Taken from the official docker documentation.</a></em></p>
+</blockquote>
+<p>And you are ready to go!</p>
+<h1 id="running-the-authentication-authority-with-docker">Running the Authentication Authority with docker<a href="#running-the-authentication-authority-with-docker" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Smallstep is providing their ca on DockerHub <a href="https://hub.docker.com/r/smallstep/step-ca">smallstep/step-ca
+</a>. You will find more information there. The official dockerfile can be found <a href="https://github.com/smallstep/certificates/blob/master/docker/Dockerfile.step-ca">here</a>.</p>
+<h2 id="prepare-the-certification-authority">prepare the certification authority<a href="#prepare-the-certification-authority" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># pull the latest docker image</span>
+</span></span><span style="display:flex;"><span>docker pull smallstep/step-ca
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create a volume to store persistent data outside of the container</span>
+</span></span><span style="display:flex;"><span>docker volume create step
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># start a shell inside of the container</span>
+</span></span><span style="display:flex;"><span>docker run -it -v step:/home/step smallstep/step-ca sh
+</span></span></code></pre></div><p>Now you should have a shell inside of the step-ca container open. We have to prepare the volume before we can use our ca. For that we have the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>step ca init
+</span></span></code></pre></div><p>This basically asks you a few questions about the purpose of the ca (which will be stored inside of the &lsquo;root certificate&rsquo;) and create your root certificate (which is required for signing the ones of your services) and creates the required configuration files. The output should look something like this:</p>
+<pre tabindex="0"><code>$ step ca init
+✔ What would you like to name your new PKI?: Smallstep
+✔ What DNS names or IP addresses would you like to add to your new CA? localhost
+✔ What address will your new CA listen at?: :9000
+✔ What would you like to name the first provisioner for your new CA?: admin
+✔ What do you want your password to be?: &lt;your password here&gt;
+
+Generating root certificate...
+all done!
+
+Generating intermediate certificate...
+all done!
+
+✔ Root certificate: /home/step/certs/root_ca.crt
+✔ Root private key: /home/step/secrets/root_ca_key
+✔ Root fingerprint: f9e45ae9ec5d42d702ce39fd9f3125372ce54d0b29a5ff3016b31d9b887a61a4
+✔ Intermediate certificate: /home/step/certs/intermediate_ca.crt
+✔ Intermediate private key: /home/step/secrets/intermediate_ca_key
+✔ Default configuration: /home/step/config/defaults.json
+✔ Certificate Authority configuration: /home/step/config/ca.json
+
+Your PKI is ready to go. To generate certificates for individual services see &#39;step help ca`}
+</code></pre><blockquote>
+<p><em><a href="https://hub.docker.com/r/smallstep/step-ca">Taken from the official docker container page on DockerHub</a></em></p>
+</blockquote>
+<p>Please store your password somewhere secure and note the fingerprint (does not have to be secure) for later usage.
+Now we have to store the password somewhere for the container. The password is basically used for encrypting the private key for security reasons. That means that the Key file can only be used with the given password. The official way is to just store the password inside of <code>/home/step/secrets/password</code> as unencrypted string.</p>
+<blockquote>
+<p>Note that this method is not secure in any way and should only be used for testing or local use. If you want to do it really secure, smallstep recommends to use an hardware encrypted device for storing and accessing the private key (yubikey for example, currently 45$ on amazon). <a href="https://smallstep.com/blog/build-a-tiny-ca-with-raspberry-pi-yubikey/">An Really good walk through on how to set it up with the Raspberry pi 4 is available on their blog</a>.</p>
+</blockquote>
+<p>To do that, you basically just have to do:</p>
+<pre tabindex="0"><code>vi /home/step/secrets/password
+</code></pre><p>and paste your password in there.
+If you are unfamiliar with vi, you just can install nano with <code>apk add nano</code> or look at these instructions:</p>
+<ul>
+<li>press CRTL+O to enter the write mode</li>
+<li>paste your password</li>
+<li>if the first characters get removed by what ever goes wrong here just add some new lines, paste it and then remove them again</li>
+<li>press ESC to exit write mode</li>
+<li>Press :wq to write the changes to the file system and quit vi</li>
+</ul>
+<p>Now the CA is ready to use!</p>
+<h2 id="adding-acme-support">adding ACME support<a href="#adding-acme-support" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Step-ca is supporting ACME out-of-the-box, but it&rsquo;s not enabled by default. To enable it, just add the ACME provisioner to your configuration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>step ca provisioner add acme --type ACME
+</span></span></code></pre></div><p>And we are done! Now you can exit the container with <code>exit</code>.</p>
+<h2 id="run-the-ca-for-the-first-time">run the ca for the first time:<a href="#run-the-ca-for-the-first-time" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 127.0.0.1:9000:9000 -v step:/home/step smallstep/step-ca
+</span></span></code></pre></div><p>This starts the ca in the background on port 9000. If you would rather have the ca on port 443 (so you don&rsquo;t have to specify the port in the URL) just change the port</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 127.0.0.1:443:9000 -v step:/home/step smallstep/step-ca
+</span></span></code></pre></div><p>To use the ca in your local network, you have to change the port binding to your servers IP. This is an example for running it on the ip 10.10.10.40 on port 443:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 10.10.10.44:443:9000 -v step:/home/step smallstep/step-ca
+</span></span></code></pre></div><p>Now you can actually use your ca!</p>
+<h2 id="making-the-ca-autostart">making the ca &ldquo;autostart&rdquo;<a href="#making-the-ca-autostart" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>There are quiet a few ways to autostart containers with docker. I usually run them with systemd, as it&rsquo;s also used for the system&rsquo;s services.</p>
+<p>This is an example systemd unit file:</p>
+<pre tabindex="0"><code># step-ca sample systemd unit
+# located in /usr/local/lib/systemd/system/step-ca.service
+[Unit]
+Description=Smallstep certification authority
+Requires=docker.service
+After=docker.service
+    
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker kill step-ca
+ExecStartPre=-/usr/bin/docker rm step-ca
+ExecStartPre=-/usr/bin/docker pull smallstep/step-ca
+ExecStart=/usr/bin/docker run --name step-ca -p 10.10.10.40:443:443 -v step:/home/step smallstep/step-ca
+ExecStop=/usr/bin/docker stop step-ca
+    
+[Install]
+WantedBy=multi-user.target
+</code></pre><p>Now you just need to start and enable your newly created service:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start step-ca
+</span></span><span style="display:flex;"><span>sudo systemctl enable step-ca
+</span></span></code></pre></div><h1 id="testing-the-ca-for-functionality">Testing the CA for functionality<a href="#testing-the-ca-for-functionality" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Now, after our ca is finally running, we just have to check if it&rsquo;s working correctly. In the same process, we are also making the <code>step</code> utility ready to be used on your local machine to interact with the ca.</p>
+<h2 id="installing-the-step-cli">installing the step cli<a href="#installing-the-step-cli" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>There are some distributions, that are packaging it already, but sadly not all.</p>
+<p>On Archlinux and Archlinux based distributions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -Syu step-cli
+</span></span></code></pre></div><blockquote>
+<p>Please note that you need to use the <code>step-cli</code> command instead of <code>step</code> on Archlinux!
+This is because <code>step</code> is already a packaged binary</p>
+</blockquote>
+<p>On MacOS using brew:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew install step
+</span></span></code></pre></div><p>On Debian:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>VERSION<span style="color:#f92672">=</span>0.15.16
+</span></span><span style="display:flex;"><span>wget https://github.com/smallstep/cli/releases/download/v<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>/step-cli_<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>_amd64.deb
+</span></span><span style="display:flex;"><span>sudo dpkg -i step-cli_<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>_amd64.deb
+</span></span></code></pre></div><blockquote>
+<p>Please note to change the VERSION variable to the <a href="https://github.com/smallstep/cli/releases/latest">newest one on github</a></p>
+</blockquote>
+<p>On Alpine Linux:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># add the testing repository, as step is not yet in the stable ones</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;http://dl-cdn.alpinelinux.org/alpine/edge/testing&#34;</span> &gt;&gt; /etc/apk/repositories
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># finally install it using the apk package manager</span>
+</span></span><span style="display:flex;"><span>apk add step-cli
+</span></span></code></pre></div><p>On NixOS:</p>
+<blockquote>
+<p>The package is located <a href="https://search.nixos.org/packages?channel=20.09&amp;show=step-cli&amp;from=0&amp;size=50&amp;sort=relevance&amp;query=step-cli">here</a>, you might have to add the testing repository first, but I think that you know hoe to install packages if you are using NixOS :)</p>
+</blockquote>
+<p>On other Linux distributions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>VERSION<span style="color:#f92672">=</span>0.15.16
+</span></span><span style="display:flex;"><span>wget -O step.tar.gz https://github.com/smallstep/cli/releases/download/v<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>/step_linux_<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>_amd64.tar.gz
+</span></span><span style="display:flex;"><span>tar -xf step.tar.gz
+</span></span><span style="display:flex;"><span>sudo cp step_<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>/bin/step /usr/bin
+</span></span></code></pre></div><blockquote>
+<p>Please note to change the VERSION variable to the <a href="https://github.com/smallstep/cli/releases/latest">newest one on github</a></p>
+</blockquote>
+<p>To check if the installed package works, just print out the version:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>step --version
+</span></span></code></pre></div><blockquote>
+<p>Note that some systems you need to run <code>step-cli --version</code></p>
+</blockquote>
+<h2 id="actually-testing-your-ca">Actually testing your CA<a href="#actually-testing-your-ca" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>The first thing we will do is bootstraping our ca. It means that we download our ca&rsquo;s root certificate validating it with our ca&rsquo;s fingerprint and storing a configuration file for the step util for saving our configuration.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>step ca bootstrap --ca-url https://ca.example.org <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --fingerprint &lt;fingerprint&gt; <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --install <span style="color:#75715e"># optional, should install the root cert on your system, but does not work for me on Archlinux, CentOS and alpine</span>
+</span></span></code></pre></div><p>To install the certificate into your systems trust store, you have to check your systems documentation as it can vary a lot between different systems.</p>
+<p>finally you can test it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl ca.example:port/health
+</span></span></code></pre></div><p>If it&rsquo;s successful, you should see the following:</p>
+<pre tabindex="0"><code>$ curl ca.example:port/health
+{&#34;status&#34;:&#34;ok&#34;}
+</code></pre><p>And now you are done! See my other posts about what and how to do after finishing setting up the ca:</p>
+<ul>
+<li>Setting up Caddy reverse proxy with local CA (coming soon)</li>
+<li>Setting up Proxmox with local CA (coming soon)</li>
+<li>Setting up Adguard with local CA (coming soon)</li>
+<li>Exposing docker container with Caddy and local CA (coming soon)</li>
+<li>Exposing services on multiple servers securely to the web (coming soon)</li>
+</ul>
+<h4 id="happy-coding">Happy coding!<a href="#happy-coding" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Sources of used software and assets on this site can be found <a href="/about/#software-used-on-this-site">here</a>.</p>
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="https://mcwertgaming.github.io/2020/a-look-behind-the-scenes/">
+                <span class="button__text">A look behind the scenes</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">
+        <span>© 2021 Damon Leven</span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="https://mcwertgaming.github.io/assets/main.js"></script>
+<script src="https://mcwertgaming.github.io/assets/prism.js"></script>
+
+
+  <script src="https://mcwertgaming.github.io/assets/languageSelector.js"></script>
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>

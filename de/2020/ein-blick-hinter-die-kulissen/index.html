@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  
+    <title>Ein Blick hinter die Kulissen :: OpenFoxBlog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dieser Post gibt eine kleine Übersicht, wie der OpenFoxBlog aufgebaut wurde und warum man sich für die jeweiligen Tools bzw. wegen entschieden hat." />
+<meta name="keywords" content="[Programmierung Technologie C&#43;&#43; Cpp Furry fox opensource Tutorials]" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://mcwertgaming.github.io/de/2020/ein-blick-hinter-die-kulissen/" />
+
+
+
+
+<link rel="stylesheet" href="https://mcwertgaming.github.io/assets/style.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="https://mcwertgaming.github.io/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="https://mcwertgaming.github.io/img/favicon/favicon.ico">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:creator" content="Damon Leven" />
+
+
+
+<meta property="og:locale" content="de" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Ein Blick hinter die Kulissen">
+<meta property="og:description" content="Dieser Post gibt eine kleine Übersicht, wie der OpenFoxBlog aufgebaut wurde und warum man sich für die jeweiligen Tools bzw. wegen entschieden hat." />
+<meta property="og:url" content="https://mcwertgaming.github.io/de/2020/ein-blick-hinter-die-kulissen/" />
+<meta property="og:site_name" content="OpenFoxBlog" />
+
+  
+    <meta property="og:image" content="https://mcwertgaming.github.io/img/favicon/favicon.ico">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+  <meta property="article:published_time" content="2020-12-27 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#e88c00">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#3f3f3f">
+
+
+
+</head>
+<body class="orange">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/de">
+  <div class="logo">
+    OpenFoxBlog
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/de/kontakt/#rss-feeds">RSS</a></li>
+        
+      
+        
+          <li><a href="/de/%C3%BCber-mich">Über mich</a></li>
+        
+      
+        
+          <li><a href="/de/kontakt">Kontakt</a></li>
+        
+      
+      
+    
+
+    
+    <div class="spacer"></div>
+    <ul class="language-selector">
+      <ul class="language-selector-current">
+          <li>Deutsch ▾</li>
+      </ul>
+      <ul class="language-selector__more hidden">
+        
+        <li><a href="https://mcwertgaming.github.io/">English</a></li>
+        
+        <li><a href="https://mcwertgaming.github.io/de/">Deutsch</a></li>
+        
+      </ul>
+    </ul>
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/de/kontakt/#rss-feeds">RSS</a></li>
+      
+    
+      
+        <li><a href="/de/%C3%BCber-mich">Über mich</a></li>
+      
+    
+      
+        <li><a href="/de/kontakt">Kontakt</a></li>
+      
+    
+    
+    <hr />
+      
+        <li>
+          <a href="https://mcwertgaming.github.io/">English</a>
+        </li>
+      
+        <li>
+          <a href="https://mcwertgaming.github.io/de/">Deutsch</a>
+        </li>
+      
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="https://mcwertgaming.github.io/de/2020/ein-blick-hinter-die-kulissen/">Ein Blick hinter die Kulissen</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2020-12-27 [Updated: 2020-12-27]
+      </span>
+    
+    
+    <span class="post-author">:: Damon Leven</span>
+    
+  </div>
+
+  
+
+  
+
+  
+
+  <div class="post-content"><div>
+        <p>In diesem Post erkläre ich, wie der OpenFoxBlog hinter den Kulissen aus einer Technischen Sicht funktioniert. Hierbei werde ich auf die Technische Lösung und die aufgetauchten Probleme dieses Blogs eingehen.</p>
+<p><a href="/2020/a-look-behind-the-scenes/">English version</a></p>
+<h1 id="wie-wurde-dieser-blog-erstellt">Wie wurde dieser Blog erstellt?<a href="#wie-wurde-dieser-blog-erstellt" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Wie ich bereits <a href="/de/2020/einf%C3%BChrung/#wie-kam-es-zu-diesem-blog">in meinem vorherigen Post</a> beschrieben habe, benutze ich für diesen Blog Hugo als statischen Website Generator. Aber was bedeutet das eigentlich? Und warum schreibe ich nicht einfach richtige HTML Seiten oder nehme medium oder WordPress?</p>
+<h1 id="warum-nicht-einfach-medium-oder-wordpress">Warum nicht einfach medium oder WordPress?<a href="#warum-nicht-einfach-medium-oder-wordpress" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Zunächst muss ich sagen, dass ich eine generelle Abneigung gegenüber WordPress habe. Geschrieben in altem PHP und durchlöchert mit vielen Problemen und Sicherheitsrisiken. Dazu kommt leider auch noch, dass ein Web Server Geld kostet und ich würde die Webseite ungern von zu Hause hosten, weil Web Server immer die ersten Ziele von automatischen Angriffen im Internet sind. Da WordPress damit aus meiner Entscheidung ausfällt, bleibt noch medium. Medium ist quasi eine Webseite, auf der man seine Blog Artikel einfach veröffentlichen kann. Da es hier nicht um ein generelles Thema geht, ist das tatsächlich sogar eine denkbare Alternative für mich. Allerdings habe ich mittlerweile viel Kritik an medium und daran, dass sie wohl aktiv versuchen die Artikel ihrer User aktiv zu monetarisieren. Ich möchte kein Geld mit meinen Artikeln machen und möchte auch, dass sie jeder kostenlos und ohne Werbung oder ähnlichen lesen kann. Ich möchte meine Gedanken auf den Bildschirm bringen und nicht Geld in meinen Geldbeutel.</p>
+<h1 id="was-ist-ein-statischer-website-generator">Was ist ein Statischer Website Generator?<a href="#was-ist-ein-statischer-website-generator" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Bevor ich die Frage beantworte, möchte ich kurz erklären wie der Blog überhaupt bei euch auf dem Bildschirm landet. Dieser Blog liegt bei GitHub <a href="https://github.com/MCWertGaming/mcwertgaming.github.io">in einem öffentlichen git repository</a> und wird bei jedem commit automatisch neu generiert. Diese Generierung macht der Statische Website Generator. Dieser bekommt ein selbst erstelltes, oder eines der vielen frei verfügbaren Themes und die Seiten, entweder direkt als HTML5 Seite, oder z.B. als markdown. Bei generieren der Webseite geht der Generator dann durch jede Seite und kopiert den Inhalt in das Theme. Das hat den Vorteil, dass man einmal das Layout der Seite erstellt und dann dieses auf alle Posts übertragen kann. Das erspart viel Arbeit, vor allem wenn man einige Zeit später etwas an der Seite ändern möchte. Gleichzeitig kann man auch RSS Feeds und Übersichten von Artikeln generieren lassen. Klar, dafuer speziell gibt es überall Funktionen, auch WordPress und ähnliche Tools können das.
+Aber mein Lieblings Feature ist, dass ich die Artikel einfach in markdown schreiben kann. Markdown ist ein einfaches und mittlerweile auch weit verbreitetes Textformatierungssystem. Auch wenn man alle Formatierung Optionen von markdown auch direkt in HTML machen kann, ist die Syntax viel einfacher. Hier ein kleines Beispiel:</p>
+<p>So sieht es gerendert aus:</p>
+<blockquote>
+<h1 id="ein-test">Ein Test<a href="#ein-test" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Dies ist ein kleiner Test für markdown / HTML Unterschiede.</p>
+<ul>
+<li>Erster Teil einer Liste</li>
+<li>Zweiter Teil einer Liste</li>
+</ul>
+<h2 id="kleinere-überschrift">Kleinere Überschrift<a href="#kleinere-überschrift" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h2>
+<p>Ein weiterer Test.</p>
+<p><a href="/">Ein Link</a></p>
+<p><img src="/img/free-images/panorama.svg" alt="Ein Bild"></p>
+<p><strong>Fett</strong></p>
+<p><em>Kursiv</em></p>
+<p><del>Durch gestrichen</del></p>
+</blockquote>
+<p>So wird es in markdown geschrieben:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># Ein Test
+</span></span><span style="display:flex;"><span>Dies ist ein kleiner Test für markdown / HTMl Unterschiede.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Erster Teil einer Liste
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Zweiter Teil einer Liste
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Kleinere Überschrift
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Ein weiterer Test.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#f92672">Ein Link</span>](<span style="color:#a6e22e">/</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>![<span style="color:#f92672">Ein Bild</span>](<span style="color:#a6e22e">/img/free-images/panorama.svg</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold">**Fett**</span>
+</span></span><span style="display:flex;"><span><span style="font-style:italic">*Kursiv*</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">~~Durch gestrichen~~</span>
+</span></span></code></pre></div><p>So wird es in HTML5 geschrieben:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ein-test&#34;</span>&gt;Ein Test&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;Dies ist ein kleiner Test für markdown / HTMl Unterschiede.&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">li</span>&gt;Erster Teil einer Liste&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">li</span>&gt;Zweiter Teil einer Liste&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">h2</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;kleinere-berschrift&#34;</span>&gt;Kleinere Überschrift&lt;/<span style="color:#f92672">h2</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;Ein weiterer Test.&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://mcwertgaming.github.io/&#34;</span>&gt;Ein Link&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://mcwertgaming.github.io/img/free-images/panorama.svg&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Ein Bild&#34;</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">strong</span>&gt;Fett&lt;/<span style="color:#f92672">strong</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">em</span>&gt;Kursiv&lt;/<span style="color:#f92672">em</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">del</span>&gt;Durch gestrichen&lt;/<span style="color:#f92672">del</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+</span></span></code></pre></div><p>Wie hier klar ersichtlich wird, ist markdown um einiges einfacher und schneller zu schreiben. Außerdem möchte ich kein Web Development machen, weil mir das einfach überhaupt nicht gefällt. Daher kann ich hiermit einfach meine Blogs in markdown schreiben ohne, dass ich auch nur eine Sekunde HTML berühren muss.</p>
+<h1 id="warum-hugo">Warum Hugo?<a href="#warum-hugo" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>Wie ich ja auch schon in meinem letzten Post erwähnt habe, habe ich in der Alten Version dieses Blogs noch Jekyll als Statischen Webseiten Generator benutzt. Der Grund, warum ich Jekyll zuerst benutzt habe, war, dass Jekyll direkt in GitHub Pages eingebaut ist (welche ich übrigens benutze, um meine Webseite kostenlos hosten zu lassen). Das bringt den Vorteil, dass man keine Konfiguration vornehmen muss, damit der Blog funktioniert. Auch das Plugin System von Jekyll war sehr überzeugend, weil es einfach alles mitbringt und damit viel für mich einfacher macht, bzw. mir viel Arbeit abnimmt. Leider brachte der Generator auch viele Probleme mit sich. Z.B. habe ich es nicht hinbekommen meine Seite zweisprachig zu machen und die Themes haben mir alle nicht so wirklich gefallen.
+Hugo auf der anderen Seite hat vollen support für zweisprachige Seiten eingebaut und bietet gleichzeitig auch viele andere Sachen, wie ein vernünftiges integrieren von Themes und der Möglichkeit diese Themes parallel zur Seite updaten zu können. Gleichzeitig habe ich das auf diesem Blog benutzte Theme dort gefunden.</p>
+<h1 id="probleme-mit-hugo">Probleme mit Hugo<a href="#probleme-mit-hugo" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h1>
+<p>So wie bei eigentlich allen Dingen in der Programmierung gab es auch bei Hugo ein Paar Probleme. Es fing an mit der Strukturierung der Webseite. Hugo erstellt die Webseiten ganz anders, als z.B. Jekyll.
+Statt einfach HTML Seiten mit den jeweiligen Namen zu erstellen, erstellt Hugo Ordner mit dem Namen der jeweiligen Seite und erstellt in diesem Ordner eine index.html Datei. Das war sehr komisch am Anfang, hat aber den Vorteil, dass die URLs in der URL Leiste nicht mehr die .html Endung haben, sondern einfach den Ordner bzw. Seiten Namen.
+Sonst lief alles super. Das Erstellen von neuen Seiten geht einfach so und auch das Bearbeiten des themes ist in der Hugo Konfigurations Datei gelöst, ohne dass ich das theme manuell bearbeiten muss.
+Zum Schluss gab es allerdings dann doch noch ein großes Problem. Die RSS Feed Integration ist für meinen Anwendungsfall sehr schlecht gemacht. Er wird automatisch erstellt, sogar für alle Sprachen, aber nur einer von beiden wird als html tag in die Seite hinzugefügt (damit man die RSS Feeds einfach mit einem Feed Reader finden kann). Dazu kam, dass nur der erste Absatz in die RSS Feeds hinzugefügt wurde. Nach dem Ändern ging allerdings der RSS nicht mehr, weil das konvertieren von markdown zu html den RSS Feed ungültig gemacht hat. Wie ich dieses Problem gelöst habe, werde ich in einem kommenden Post genauerer erklären.</p>
+<p>Das war es für den heutigen Artikel, ich hoffe, dass ich einen kleinen Einblick hinter die Kulissen dieses Blogs geben konnte und wünsche euch noch ein paar Rest Weihnachtsstimmung und einen guten Rutsch ins neue Jahr!</p>
+<h4 id="frohes-programmieren">Frohes Programmieren!<a href="#frohes-programmieren" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h4>
+<p>Quellen von hier benutzter software und assets koennen <a href="/de/%C3%BCber-mich/#in-dieser-seite-verwendete-software">hier</a> gefunden werden.</p>
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Andere Posts lesen</span>
+        <hr />
+    </div>
+    <div class="pagination__buttons">
+        
+        
+        <span class="button next">
+            <a href="https://mcwertgaming.github.io/de/2020/einf%C3%BChrung/">
+                <span class="button__text">Einführung</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <div class="copyright copyright--user">
+        <span>© 2021 Damon Leven</span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
+      </div>
+  </div>
+</footer>
+
+<script src="https://mcwertgaming.github.io/assets/main.js"></script>
+<script src="https://mcwertgaming.github.io/assets/prism.js"></script>
+
+
+  <script src="https://mcwertgaming.github.io/assets/languageSelector.js"></script>
+
+
+
+
+
+
+  
+</div>
+
+</body>
+</html>
